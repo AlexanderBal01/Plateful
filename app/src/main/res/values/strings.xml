@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Plateful</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="random">Random</string>
+    <string name="favourites">Favourites</string>
+    <string name="search">Search</string>
+    <string name="food_detail">Food Detail</string>
 </resources>
