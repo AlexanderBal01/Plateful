@@ -1,5 +1,8 @@
 package com.example.plateful.navigation
 
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NamedNavArgument
+
 private object Routes {
     // Auth Graph Route
     const val AUTH = "auth"
@@ -20,3 +23,10 @@ private object ArgParams {
 
     fun toPath(param: String) = "{${param}}"
 }
+
+sealed class TopLevelDestination(
+    val route: String,
+    val title: Int? = null,
+    val icon: ImageVector? = null,
+    val navArguments: List<NamedNavArgument> = emptyList()
+)
