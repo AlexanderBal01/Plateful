@@ -14,3 +14,9 @@ private object Routes {
     const val FAVOURITES = "favourites"
     const val FOODDETAIL = "foodDetail/{${ArgParams.FOOD_ID}}"
 }
+
+private object ArgParams {
+    const val FOOD_ID = "foodId"
+
+    fun toPath(param: String) = "{${param}}"
+}
