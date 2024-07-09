@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1085809926429",
+    "project_id": "plateful-d035b",
+    "storage_bucket": "plateful-d035b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085809926429:android:1c4e8b17a4565984aa41f4",
+        "android_client_info": {
+          "package_name": "com.example.plateful"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCubc6WmPP0-_18MA5sDdIgkJg6cCoBeVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
