@@ -5,18 +5,18 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.plateful.navigation.AppScreen
 
 @Composable
 fun PlatefulBottomBar(
     navController: NavHostController,
+    currentRoute: NavDestination?
 ) {
-    val navigationScreen = listOf(
+    val navItems = listOf(
         AppScreen.Main.Home,
         AppScreen.Main.Favourites,
         AppScreen.Main.RandomFood,
@@ -24,14 +24,10 @@ fun PlatefulBottomBar(
     )
 
     NavigationBar {
-
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-
-        navigationScreen.forEach { item ->
+        navItems.forEach { item ->
 
             NavigationBarItem(
-                selected = currentRoute == item.route,
+                selected = currentRoute?.route == item.route,
 
                 label = {
                     Text(
@@ -40,7 +36,7 @@ fun PlatefulBottomBar(
                 },
                 icon = {
                     Icon(
-                        imageVector = (if (item.route == currentRoute) item.selectedIcon else item.unselectedIcon)!!,
+                        imageVector = (if (item.route == currentRoute?.route) item.selectedIcon else item.unselectedIcon)!!,
                         contentDescription = stringResource(id = item.title!!)
                     )
                 },
