@@ -1,34 +1,34 @@
 package com.example.plateful.ui.components.navigation
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
-import com.example.plateful.R
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.example.plateful.navigation.AppScreen
 
 @Composable
 fun NavigationDrawerContent(
+    navController: NavHostController,
     selectedDestination: NavDestination?,
-    onTabPressed: ((String) -> Unit),
     modifier: Modifier = Modifier
 ) {
     val navItems = listOf(
         AppScreen.Main.Home,
         AppScreen.Main.Favourites,
         AppScreen.Main.RandomFood,
-        AppScreen.Main.Profile,
     )
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxHeight()) {
         // Loop through each navItem in OverviewScreens
         navItems.forEach{ item ->
 
@@ -38,7 +38,7 @@ fun NavigationDrawerContent(
                 label = {
                     Text(
                         text = stringResource(id = item.title!!),
-                        modifier = modifier.padding(horizontal = dimensionResource(R.dimen.drawer_padding_header))
+                        style = MaterialTheme.typography.titleSmall
                     )
                 },
                 icon = {
@@ -49,8 +49,19 @@ fun NavigationDrawerContent(
                 },
                 colors = NavigationDrawerItemDefaults.colors(
                     unselectedContainerColor = Color.Transparent,
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+
+
                 ),
-                onClick = { onTabPressed(item.route) }
+                onClick = {
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             )
         }
     }
