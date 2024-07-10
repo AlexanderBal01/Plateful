@@ -1,5 +1,6 @@
 package com.example.plateful.navigation.navGraphs
 
+import androidx.compose.runtime.State
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -15,7 +16,7 @@ import com.example.plateful.ui.screen.main.SearchScreen
 
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
-    rootNavBackStackEntry: NavBackStackEntry?
+    rootNavBackStackEntry: State<NavBackStackEntry?>
 ) {
     navigation(
         route = AppScreen.Main.route,
