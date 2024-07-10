@@ -14,7 +14,7 @@ import com.example.plateful.navigation.AppScreen
 @Composable
 fun PlatefulBottomBar(
     navController: NavHostController,
-    currentRoute: NavDestination?
+    selectedDestination: NavDestination?
 ) {
     val navItems = listOf(
         AppScreen.Main.Home,
@@ -27,7 +27,7 @@ fun PlatefulBottomBar(
         navItems.forEach { item ->
 
             NavigationBarItem(
-                selected = currentRoute?.route == item.route,
+                selected = selectedDestination?.route == item.route,
 
                 label = {
                     Text(
@@ -36,7 +36,7 @@ fun PlatefulBottomBar(
                 },
                 icon = {
                     Icon(
-                        imageVector = (if (item.route == currentRoute?.route) item.selectedIcon else item.unselectedIcon)!!,
+                        imageVector = (if (item.route == selectedDestination?.route) item.selectedIcon else item.unselectedIcon)!!,
                         contentDescription = stringResource(id = item.title!!)
                     )
                 },
