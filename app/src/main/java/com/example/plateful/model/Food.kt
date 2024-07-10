@@ -1,7 +1,7 @@
 package com.example.plateful.model
 
 data class Food(
-    var foodId: String = "",
+    var id: String = "",
     var name: String = "",
     var imageUrl: String = ""
 )
