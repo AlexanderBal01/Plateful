@@ -15,3 +15,9 @@ data class FoodListState(
 data class WorkerState(
     val workerInfo: WorkInfo? = null
 )
+
+sealed class FoodApiState {
+    object Success: FoodApiState
+    object Error: FoodApiState
+    object Loading: FoodApiState
+}
