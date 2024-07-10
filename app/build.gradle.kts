@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -62,12 +61,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.compose.material.icons)
-    implementation(platform(libs.com.google.firebase.bom))
-    implementation(libs.com.google.firebase.analytics)
-    implementation(libs.com.google.firebase.auth)
     implementation(libs.androidx.material3.window.size)
     implementation(libs.androidx.material3.window.size)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.room.common)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
