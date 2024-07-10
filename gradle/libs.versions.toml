@@ -12,6 +12,10 @@ navigation = "2.7.7"
 material3WindowSizeClass = "1.2.1"
 workRuntimeKtx = "2.9.0"
 roomCommon = "2.6.1"
+retrofit = "2.9.0"
+retrofit-serialization = "1.0.0"
+okhttp = "4.12.0"
+okhttpInterceptor = "4.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +37,10 @@ androidx-compose-material-icons = {group = "androidx.compose.material", name = "
 androidx-material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3WindowSizeClass" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+squareup-retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
+jakewharton-retrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref="retrofit-serialization"}
+squareup-okhttp3-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp"}
+squareup-okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpInterceptor"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
