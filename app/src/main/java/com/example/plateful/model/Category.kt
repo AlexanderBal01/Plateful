@@ -4,5 +4,5 @@ data class Category(
     var id: String = "",
     var name: String = "",
     var imageUrl: String = "",
-
+    var description: String = "",
 )
