@@ -2,9 +2,10 @@ package com.example.plateful.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -33,15 +34,14 @@ import com.example.plateful.navigation.AppScreen
 import com.example.plateful.ui.components.navigation.NavComponent
 import com.example.plateful.ui.components.navigation.NavigationDrawerContent
 import com.example.plateful.ui.components.navigation.PlatefulBottomBar
-import com.example.plateful.ui.components.navigation.PlatefulChildTopAppBar
 import com.example.plateful.ui.components.navigation.PlatefulNavigationRail
+import com.example.plateful.ui.components.navigation.PlatefulTopAppBar
 import com.example.plateful.ui.util.NavigationType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlatefulApp(
     modifier: Modifier = Modifier,
-    isAuthenticated: Boolean,
     navigationType: NavigationType,
     rootNavHostController: NavHostController = rememberNavController()
 ) {
@@ -66,13 +66,6 @@ fun PlatefulApp(
 
         }
 
-        AppScreen.Main.Profile.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Profile.title!!)
-
-        }
-
         AppScreen.Main.RandomFood.route -> {
             showBottomBarState.value = true
             showTopBarState.value = true
@@ -83,12 +76,6 @@ fun PlatefulApp(
             showBottomBarState.value = true
             showTopBarState.value = true
             topAppbarTitle.value = stringResource(AppScreen.Main.Favourites.title!!)
-        }
-
-        AppScreen.Main.Search.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Search.title!!)
         }
 
         AppScreen.Main.FoodDetail.route -> {
@@ -106,19 +93,29 @@ fun PlatefulApp(
     when (navigationType) {
         NavigationType.PERMANENT_NAVIGATION_DRAWER -> {
             PermanentNavigationDrawer(
-            drawerContent = {
-                PermanentDrawerSheet (modifier.width(dimensionResource(R.dimen.drawer_width))) {
-                    NavigationDrawerContent(
-                        selectedDestination = rootNavHostController.currentDestination,
-                        onTabPressed = { node: String -> rootNavHostController.navigate(node) },
+                modifier = modifier,
+                drawerContent = {
+                    PermanentDrawerSheet (
                         modifier = modifier
-                            .wrapContentWidth()
+                            .width(dimensionResource(R.dimen.drawer_width))
                             .fillMaxHeight()
-                            .background(MaterialTheme.colorScheme.primary)
-                            .padding(dimensionResource(R.dimen.drawer_padding_content))
-                    )
+                            .background(MaterialTheme.colorScheme.primaryContainer),
+                        windowInsets = WindowInsets.ime
+                    ) {
+                        NavigationDrawerContent(
+                            selectedDestination = rootNavHostController.currentDestination,
+                            navController = rootNavHostController,
+                            modifier = modifier
+                                .wrapContentWidth()
+                                .fillMaxHeight()
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                .padding(
+                                    dimensionResource(R.dimen.drawer_padding_content_horizontal),
+                                    dimensionResource(R.dimen.drawer_padding_header)
+                                )
+                        )
+                    }
                 }
-            }
             ) {
                 Scaffold(
                     containerColor = Color.Transparent,
@@ -126,7 +123,7 @@ fun PlatefulApp(
                         .fillMaxSize()
                         .nestedScroll(barScrollBehavior.nestedScrollConnection),
                     topBar = {
-                        PlatefulChildTopAppBar(
+                        PlatefulTopAppBar(
                             title = topAppbarTitle.value,
                             canNavigateBack = canNavigateBack,
                             barScrollBehavior = barScrollBehavior,
@@ -137,16 +134,16 @@ fun PlatefulApp(
                     NavComponent(
                         navController = rootNavHostController,
                         modifier = modifier.padding(innerPadding),
-                        isAuthenticated = isAuthenticated
                     )
                 }
             }
         }
+
         NavigationType.BOTTOM_NAVIGATION -> {
             Scaffold(
                 containerColor = Color.Transparent,
                 topBar = {
-                    PlatefulChildTopAppBar(
+                    PlatefulTopAppBar(
                         title = topAppbarTitle.value,
                         canNavigateBack = canNavigateBack,
                         barScrollBehavior = barScrollBehavior,
@@ -163,23 +160,20 @@ fun PlatefulApp(
                 NavComponent(
                     navController = rootNavHostController,
                     modifier = modifier.padding(innerPadding),
-                    isAuthenticated = isAuthenticated
                 )
             }
         }
         else -> {
-            Row {
                 AnimatedVisibility(visible = navigationType == NavigationType.NAVIGATION_RAIL) {
                     PlatefulNavigationRail(
-                        modifier = modifier,
                         selectedDestination = rootNavHostController.currentDestination,
-                        onTabPressed = { node: String -> rootNavHostController.navigate(node) }
+                        navController = rootNavHostController
                     )
                 }
                 Scaffold (
                     containerColor = Color.Transparent,
                     topBar = {
-                        PlatefulChildTopAppBar(
+                        PlatefulTopAppBar(
                             title = topAppbarTitle.value,
                             canNavigateBack = canNavigateBack,
                             barScrollBehavior = barScrollBehavior,
@@ -191,10 +185,9 @@ fun PlatefulApp(
                     NavComponent(
                         navController = rootNavHostController,
                         modifier = modifier.padding(innerPadding),
-                        isAuthenticated = isAuthenticated
                     )
                 }
-            }
+
         }
     }
 }
