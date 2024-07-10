@@ -7,12 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.plateful.navigation.AppScreen
-import com.example.plateful.ui.screen.main.FavouritesScreen
-import com.example.plateful.ui.screen.main.FoodDetailScreen
-import com.example.plateful.ui.screen.main.HomeScreen
-import com.example.plateful.ui.screen.main.ProfileScreen
-import com.example.plateful.ui.screen.main.RandomFoodScreen
-import com.example.plateful.ui.screen.main.SearchScreen
+import com.example.plateful.ui.screen.favourites.FavouritesScreen
+import com.example.plateful.ui.screen.fooddetail.FoodDetailScreen
+import com.example.plateful.ui.screen.home.HomeScreen
+import com.example.plateful.ui.screen.randomfood.RandomFoodScreen
 
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
@@ -29,24 +27,8 @@ fun NavGraphBuilder.mainNavGraph(
                 onFoodClick = {
                     val route = AppScreen.Main.FoodDetail.createRoute(foodId = it.toString())
                     navController.navigate(route)
-                },
-                onSearch = {
-                    val route = AppScreen.Main.Search.createRoute(query = it.toString())
-                    navController.navigate(route)
                 }
             )
-        }
-
-        composable(
-            route = AppScreen.Main.Profile.route
-        ) {
-            ProfileScreen(navigateToLogin = {
-                navController.navigate(AppScreen.Auth.route) {
-                    popUpTo(AppScreen.Main.route) {
-                        inclusive = true
-                    }
-                }
-            })
         }
 
         composable(
@@ -69,23 +51,6 @@ fun NavGraphBuilder.mainNavGraph(
                     navController.navigate(route)
                 }
             )
-        }
-
-        composable(
-            route = AppScreen.Main.Search.route
-        ) {
-            val query = rootNavBackStackEntry.value?.arguments?.getString("query")
-            if (query != null) {
-                SearchScreen(
-                    onFoodClick = {
-                        val route = AppScreen.Main.FoodDetail.createRoute(foodId = it.toString())
-                        navController.navigate(route)
-                    },
-                    navigateBack = {
-                        navController.navigateUp()
-                    }
-                )
-            }
         }
 
         composable(
