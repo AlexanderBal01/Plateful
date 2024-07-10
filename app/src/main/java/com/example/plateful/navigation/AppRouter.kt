@@ -1,11 +1,14 @@
 package com.example.plateful.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Fastfood
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
@@ -38,7 +41,8 @@ private object ArgParams {
 sealed class TopLevelDestination(
     val route: String,
     val title: Int? = null,
-    val icon: ImageVector? = null,
+    val selectedIcon: ImageVector? = null,
+    val unselectedIcon: ImageVector? = null,
     val navArguments: List<NamedNavArgument> = emptyList()
 )
 
@@ -52,31 +56,34 @@ sealed class AppScreen(val route: String) {
         object Home: TopLevelDestination(
             route = Routes.HOME,
             title = R.string.home,
-            icon = Icons.Filled.Home,
+            selectedIcon = Icons.Filled.Home,
+            unselectedIcon = Icons.Outlined.Home
         )
 
         object Profile: TopLevelDestination(
             route = Routes.PROFILE,
             title = R.string.profile,
-            icon = Icons.Filled.AddCircle,
+            selectedIcon = Icons.Filled.AccountCircle,
+            unselectedIcon = Icons.Outlined.AccountCircle
         )
 
         object RandomFood: TopLevelDestination(
             route = Routes.RANDOMFOOD,
             title = R.string.random,
-            icon = Icons.Filled.Search
+            selectedIcon = Icons.Filled.Search,
+            unselectedIcon = Icons.Outlined.Search
         )
 
         object Favourites: TopLevelDestination(
             route = Routes.FAVOURITES,
             title = R.string.favourites,
-            icon = Icons.Filled.Star
+            selectedIcon = Icons.Filled.Star,
+            unselectedIcon = Icons.Outlined.Star
         )
 
         object Search: TopLevelDestination(
             route = Routes.SEARCH,
             title = R.string.search,
-            icon = Icons.Filled.Search,
             navArguments = listOf(navArgument(ArgParams.SEARCH) {
                 type = NavType.Companion.StringType
             })
@@ -89,7 +96,6 @@ sealed class AppScreen(val route: String) {
         object FoodDetail: TopLevelDestination(
             route = Routes.FOODDETAIL,
             title = R.string.food_detail,
-            icon = Icons.Filled.Fastfood,
             navArguments = listOf(navArgument(ArgParams.FOOD_ID) {
                 type = NavType.Companion.StringType
             })
