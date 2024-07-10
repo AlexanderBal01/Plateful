@@ -21,7 +21,7 @@ fun NavigationDrawerContent(
     onTabPressed: ((String) -> Unit),
     modifier: Modifier = Modifier
 ) {
-    val navigationScreen = listOf(
+    val navItems = listOf(
         AppScreen.Main.Home,
         AppScreen.Main.Favourites,
         AppScreen.Main.RandomFood,
@@ -30,7 +30,7 @@ fun NavigationDrawerContent(
 
     Column(modifier = modifier) {
         // Loop through each navItem in OverviewScreens
-        navigationScreen.forEach{ item ->
+        navItems.forEach{ item ->
 
             NavigationDrawerItem(
                 // Check if the current navItem is selected
