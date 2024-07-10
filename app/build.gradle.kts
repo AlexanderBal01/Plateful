@@ -66,7 +66,7 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.room.common)
     implementation(libs.squareup.retrofit2)
-    implementation(libs.jakewharton.retrofit)
+    implementation(libs.squareup.retrofit2.convert.gson)
     implementation(libs.squareup.okhttp3.okhttp)
     implementation(libs.squareup.okhttp3.logging.interceptor)
     testImplementation(libs.junit)
