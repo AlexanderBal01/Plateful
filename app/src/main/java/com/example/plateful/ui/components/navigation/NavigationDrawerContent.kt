@@ -11,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import com.example.plateful.R
+import com.example.plateful.navigation.AppScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,29 +23,38 @@ fun NavigationDrawerContent(
     onTabPressed: ((String) -> Unit),
     modifier: Modifier = Modifier
 ) {
+    val navigationScreen = listOf(
+        AppScreen.Main.Home,
+        AppScreen.Main.Favourites,
+        AppScreen.Main.RandomFood,
+        AppScreen.Main.Profile,
+    )
+
     Column(modifier = modifier) {
         // Loop through each navItem in OverviewScreens
-        for (navItem in OverviewScreens.values()) {
+        navigationScreen.forEach{ item ->
+
             NavigationDrawerItem(
                 // Check if the current navItem is selected
-                selected = selectedDestination?.route == navItem.name,
+                selected = selectedDestination?.route == item.route,
                 label = {
                     Text(
-                        text = navItem.name,
+                        text = stringResource(id = item.title!!),
                         modifier = modifier.padding(horizontal = dimensionResource(R.dimen.drawer_padding_header))
                     )
                 },
                 icon = {
                     Icon(
-                        imageVector = navItem.icon,
-                        contentDescription = navItem.name,
+                        imageVector = item.selectedIcon!!,
+                        contentDescription = item.route,
                     )
                 },
                 colors = NavigationDrawerItemDefaults.colors(
                     unselectedContainerColor = Color.Transparent,
                 ),
-                onClick = { onTabPressed(navItem.name) }
+                onClick = { onTabPressed(item.route) }
             )
+        }
         }
     }
 }
