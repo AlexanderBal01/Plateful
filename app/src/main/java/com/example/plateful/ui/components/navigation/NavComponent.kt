@@ -8,20 +8,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.plateful.navigation.AppScreen
-import com.example.plateful.navigation.navGraphs.authNavGraph
 import com.example.plateful.navigation.navGraphs.mainNavGraph
 
 @Composable
 fun NavComponent(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
-    isAuthenticated: Boolean
+    modifier: Modifier = Modifier
 ) {
     val rootNavBackStackEntry = navController.currentBackStackEntryAsState()
 
     NavHost(
         navController = navController,
-        startDestination = if (isAuthenticated) AppScreen.Main.route else AppScreen.Auth.route,
+        startDestination = AppScreen.Main.route,
         modifier = modifier,
         enterTransition = {
             EnterTransition.None
@@ -30,7 +28,6 @@ fun NavComponent(
             ExitTransition.None
         }
     ) {
-        authNavGraph(navController)
         mainNavGraph(navController, rootNavBackStackEntry)
     }
 }
