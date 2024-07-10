@@ -74,26 +74,31 @@ fun NavGraphBuilder.mainNavGraph(
         composable(
             route = AppScreen.Main.Search.route
         ) {
-            val query = rootNavBackStackEntry?.arguments?.getString("query")
-            SearchScreen(
-                onFoodClick = {
-                    val route = AppScreen.Main.FoodDetail.createRoute(foodId = it.toString())
-                    navController.navigate(route)
-                },
-                navigateBack = {
-                    navController.navigateUp()
-                }
-            )
+            val query = rootNavBackStackEntry.value?.arguments?.getString("query")
+            if (query != null) {
+                SearchScreen(
+                    onFoodClick = {
+                        val route = AppScreen.Main.FoodDetail.createRoute(foodId = it.toString())
+                        navController.navigate(route)
+                    },
+                    navigateBack = {
+                        navController.navigateUp()
+                    }
+                )
+            }
         }
 
         composable(
             route = AppScreen.Main.FoodDetail.route
         ) {
-            FoodDetailScreen(
-                navigateBack = {
-                    navController.navigateUp()
-                }
-            )
+            val foodId = rootNavBackStackEntry.value?.arguments?.getString("foodId")
+            if (foodId != null) {
+                FoodDetailScreen(
+                    navigateBack = {
+                        navController.navigateUp()
+                    }
+                )
+            }
         }
     }
 }
