@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.com.google.firebase.auth)
     implementation(libs.androidx.material3.window.size)
     implementation(libs.androidx.material3.window.size)
+    implementation(libs.androidx.work.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
