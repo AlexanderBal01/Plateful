@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_screen">15dp</dimen>
+    <dimen name="drawer_width">160dp</dimen>
+    <dimen name="spacer_height">8dp</dimen>
+    <dimen name="card_icon">30dp</dimen>
+    <dimen name="drawer_padding_content">8dp</dimen>
+    <dimen name="drawer_padding_header">8dp</dimen>
+    <dimen name="searchbar_padding">8dp</dimen>
+    <dimen name="card_padding">24dp</dimen>
+    <dimen name="card_outer_padding">8dp</dimen>
+    <dimen name="searchbar_corner_rounding">15dp</dimen>
+    <dimen name="card_corner_radius">28dp</dimen>
+    <dimen name="large_padding">24dp</dimen>
+</resources>
