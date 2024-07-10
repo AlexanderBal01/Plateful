@@ -1,4 +1,4 @@
-package com.example.plateful.ui.screen.auth
+package com.example.plateful.ui.screen.auth.register
 
 import androidx.compose.runtime.Composable
 

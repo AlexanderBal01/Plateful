@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.plateful.navigation.AppScreen
-import com.example.plateful.ui.screen.auth.LoginScreen
-import com.example.plateful.ui.screen.auth.RegisterScreen
+import com.example.plateful.ui.screen.auth.login.LoginScreen
+import com.example.plateful.ui.screen.auth.register.RegisterScreen
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController
