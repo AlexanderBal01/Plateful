@@ -6,10 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.plateful.data.database.category.CategoryDao
 import com.example.plateful.data.database.category.DbCategory
+import com.example.plateful.data.database.food.DbFood
+import com.example.plateful.data.database.food.FoodDao
 
-@Database(entities = [DbCategory::class], version = 2, exportSchema = false)
+@Database(entities = [DbCategory::class, DbFood::class], version = 3, exportSchema = false)
 abstract class PlatefulDb: RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
+
+    abstract fun foodDao(): FoodDao
 
     companion object {
         @Volatile
