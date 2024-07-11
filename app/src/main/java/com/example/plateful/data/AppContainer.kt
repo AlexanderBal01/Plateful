@@ -3,6 +3,7 @@ package com.example.plateful.data
 import android.content.Context
 import com.example.plateful.data.database.PlatefulDb
 import com.example.plateful.network.CategoryApiService
+import com.example.plateful.network.FoodApiService
 import com.example.plateful.network.NetworkConnectionInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 interface AppContainer {
     val categoryRepository: CategoryRepository
+    val foodRepository: FoodRepository
 }
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
@@ -33,10 +35,22 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
         retrofit.create(CategoryApiService::class.java)
     }
 
+    private val retrofitFoodService: FoodApiService by lazy {
+        retrofit.create(FoodApiService::class.java)
+    }
+
     override val categoryRepository: CategoryRepository by lazy {
         CashingCategoryRepository(
             PlatefulDb.getDatabase(context = context).categoryDao(),
             retrofitCategoryService,
+            context
+        )
+    }
+
+    override val foodRepository: FoodRepository by lazy {
+        CashingFoodRepository(
+            PlatefulDb.getDatabase(context = context).foodDao(),
+            retrofitFoodService,
             context
         )
     }
