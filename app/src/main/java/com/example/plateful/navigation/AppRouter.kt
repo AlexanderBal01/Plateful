@@ -11,7 +11,6 @@ import androidx.navigation.navArgument
 import com.example.plateful.R
 
 private object Routes {
-
     // Main Graph Route
     const val MAIN = "main"
     const val HOME = "home"
@@ -77,7 +76,7 @@ sealed class AppScreen {
         ) {
             fun createRoute(category: String) =
                 Routes.CATEGORYFOOD
-                    .replace(ArgParams.toPath(ArgParams.FOOD_ID), category)
+                    .replace(ArgParams.toPath(ArgParams.CATEGORY), category)
         }
     }
 }
