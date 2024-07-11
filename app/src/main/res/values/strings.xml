@@ -6,7 +6,7 @@
     <string name="food_detail">Food Detail</string>
     <string name="menu">Menu items</string>
     <string name="go_back">Go back</string>
-    <string name="category_detail">Category detail</string>
+    <string name="category_detail">Category food</string>
     <string name="loading">loading</string>
     <string name="could_not_load">Couldn\'t load</string>
     <string name="img_category">Image of category</string>
