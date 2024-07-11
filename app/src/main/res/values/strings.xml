@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">Plateful</string>
     <string name="home">Home</string>
-    <string name="profile">Profile</string>
     <string name="random">Random</string>
     <string name="favourites">Favourites</string>
-    <string name="search">Search</string>
     <string name="food_detail">Food Detail</string>
     <string name="menu">Menu items</string>
     <string name="go_back">Go back</string>
     <string name="category_detail">Category detail</string>
+    <string name="loading">loading</string>
+    <string name="could_not_load">Couldn\'t load</string>
+    <string name="img_category">Image of category</string>
+    <string name="navigate_to_category_item">Navigate to category item</string>
 </resources>
