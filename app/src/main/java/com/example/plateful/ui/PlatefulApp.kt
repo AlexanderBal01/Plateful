@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -36,6 +37,7 @@ import com.example.plateful.ui.components.navigation.NavigationDrawerContent
 import com.example.plateful.ui.components.navigation.PlatefulBottomBar
 import com.example.plateful.ui.components.navigation.PlatefulNavigationRail
 import com.example.plateful.ui.components.navigation.PlatefulTopAppBar
+import com.example.plateful.ui.screen.home.HomeViewModel
 import com.example.plateful.ui.util.NavigationType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +45,8 @@ import com.example.plateful.ui.util.NavigationType
 fun PlatefulApp(
     modifier: Modifier = Modifier,
     navigationType: NavigationType,
-    rootNavHostController: NavHostController = rememberNavController()
+    rootNavHostController: NavHostController = rememberNavController(),
+    homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory)
 ) {
     val topAppbarTitle = remember { mutableStateOf("") }
     val topAppBarState = rememberTopAppBarState()
@@ -134,6 +137,7 @@ fun PlatefulApp(
                     NavComponent(
                         navController = rootNavHostController,
                         modifier = modifier.padding(innerPadding),
+                        homeViewModel = homeViewModel
                     )
                 }
             }
@@ -160,6 +164,7 @@ fun PlatefulApp(
                 NavComponent(
                     navController = rootNavHostController,
                     modifier = modifier.padding(innerPadding),
+                    homeViewModel = homeViewModel
                 )
             }
         }
@@ -185,6 +190,7 @@ fun PlatefulApp(
                     NavComponent(
                         navController = rootNavHostController,
                         modifier = modifier.padding(innerPadding),
+                        homeViewModel = homeViewModel
                     )
                 }
 
