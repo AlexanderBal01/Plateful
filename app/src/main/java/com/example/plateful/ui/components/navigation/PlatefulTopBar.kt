@@ -12,7 +12,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.example.plateful.R
 
@@ -30,7 +29,6 @@ fun PlatefulTopAppBar(
             Text(title,
                 style = MaterialTheme.typography.titleLarge,
                 overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSecondary
             )
         },
