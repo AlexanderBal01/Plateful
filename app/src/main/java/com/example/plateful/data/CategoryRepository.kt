@@ -37,7 +37,7 @@ class CashingCategoryRepository(
     private val categoryDao: CategoryDao,
     private val categoryApiService: CategoryApiService,
     context: Context
-) : CategoryRepository {
+): CategoryRepository {
     private var workId = UUID(1,2)
     private val workManager = WorkManager.getInstance(context)
 
@@ -72,13 +72,11 @@ class CashingCategoryRepository(
         wifiWorkInfo = workManager.getWorkInfoByIdFlow(request.id)
 
         try {
-            Log.e("TEST2", "${categoryApiService.getCategories()}")
             categoryApiService
                 .getCategoriesAsFlow()
                 .asDomainObject()
                 .collect {
                     for (category in it) {
-                        Log.i("TEST", "refresh: $it")
                         insertCategory(category)
                     }
                 }
