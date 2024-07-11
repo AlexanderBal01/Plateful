@@ -86,6 +86,12 @@ fun PlatefulApp(
             showTopBarState.value = true
             topAppbarTitle.value = stringResource(AppScreen.Main.FoodDetail.title!!)
         }
+        
+        AppScreen.Main.CategoryFood.route -> {
+            showBottomBarState.value = true
+            showTopBarState.value = true
+            topAppbarTitle.value = stringResource(id = AppScreen.Main.CategoryFood.title!!)
+        }
 
         else -> {
             showBottomBarState.value = false
