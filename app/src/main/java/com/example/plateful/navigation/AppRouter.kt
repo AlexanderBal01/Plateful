@@ -15,12 +15,14 @@ private object Routes {
     // Main Graph Route
     const val MAIN = "main"
     const val HOME = "home"
+    const val CATEGORYDETAIL = "categoryDetail/{${ArgParams.CATEGORY}}"
     const val RANDOMFOOD = "random"
     const val FAVOURITES = "favourites"
     const val FOODDETAIL = "foodDetail/{${ArgParams.FOOD_ID}}"
 }
 
 private object ArgParams {
+    const val CATEGORY = "category"
     const val FOOD_ID = "foodId"
 
     fun toPath(param: String) = "{${param}}"
@@ -64,6 +66,18 @@ sealed class AppScreen {
             fun createRoute(foodId: String) =
                 Routes.FOODDETAIL
                     .replace(ArgParams.toPath(ArgParams.FOOD_ID), foodId)
+        }
+
+        object CategoryDetail: TopLevelDestination(
+            route = Routes.CATEGORYDETAIL,
+            title = R.string.category_detail,
+            navArguments = listOf(navArgument(ArgParams.CATEGORY) {
+                type = NavType.Companion.StringType
+            })
+        ) {
+            fun createRoute(category: String) =
+                Routes.FOODDETAIL
+                    .replace(ArgParams.toPath(ArgParams.FOOD_ID), category)
         }
     }
 }
