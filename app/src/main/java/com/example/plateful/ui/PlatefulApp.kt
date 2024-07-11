@@ -37,6 +37,7 @@ import com.example.plateful.ui.components.navigation.NavigationDrawerContent
 import com.example.plateful.ui.components.navigation.PlatefulBottomBar
 import com.example.plateful.ui.components.navigation.PlatefulNavigationRail
 import com.example.plateful.ui.components.navigation.PlatefulTopAppBar
+import com.example.plateful.ui.screen.categoryFood.CategoryFoodViewModel
 import com.example.plateful.ui.screen.home.HomeViewModel
 import com.example.plateful.ui.util.NavigationType
 
@@ -46,7 +47,8 @@ fun PlatefulApp(
     modifier: Modifier = Modifier,
     navigationType: NavigationType,
     rootNavHostController: NavHostController = rememberNavController(),
-    homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory)
+    homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
+    categoryFoodViewModel: CategoryFoodViewModel = viewModel(factory = CategoryFoodViewModel.Factory)
 ) {
     val topAppbarTitle = remember { mutableStateOf("") }
     val topAppBarState = rememberTopAppBarState()
@@ -143,7 +145,8 @@ fun PlatefulApp(
                     NavComponent(
                         navController = rootNavHostController,
                         modifier = modifier.padding(innerPadding),
-                        homeViewModel = homeViewModel
+                        homeViewModel = homeViewModel,
+                        categoryFoodViewModel = categoryFoodViewModel
                     )
                 }
             }
@@ -170,7 +173,8 @@ fun PlatefulApp(
                 NavComponent(
                     navController = rootNavHostController,
                     modifier = modifier.padding(innerPadding),
-                    homeViewModel = homeViewModel
+                    homeViewModel = homeViewModel,
+                    categoryFoodViewModel = categoryFoodViewModel
                 )
             }
         }
@@ -196,7 +200,8 @@ fun PlatefulApp(
                     NavComponent(
                         navController = rootNavHostController,
                         modifier = modifier.padding(innerPadding),
-                        homeViewModel = homeViewModel
+                        homeViewModel = homeViewModel,
+                        categoryFoodViewModel = categoryFoodViewModel
                     )
                 }
 
