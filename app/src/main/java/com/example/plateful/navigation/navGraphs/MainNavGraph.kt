@@ -10,11 +10,13 @@ import com.example.plateful.navigation.AppScreen
 import com.example.plateful.ui.screen.favourites.FavouritesScreen
 import com.example.plateful.ui.screen.fooddetail.FoodDetailScreen
 import com.example.plateful.ui.screen.home.HomeScreen
+import com.example.plateful.ui.screen.home.HomeViewModel
 import com.example.plateful.ui.screen.randomfood.RandomFoodScreen
 
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
-    rootNavBackStackEntry: State<NavBackStackEntry?>
+    rootNavBackStackEntry: State<NavBackStackEntry?>,
+    homeViewModel: HomeViewModel
 ) {
     navigation(
         route = AppScreen.Main.route,
@@ -24,10 +26,11 @@ fun NavGraphBuilder.mainNavGraph(
             route = AppScreen.Main.Home.route
         ) {
             HomeScreen(
-                onFoodClick = {
-                    val route = AppScreen.Main.FoodDetail.createRoute(foodId = it.toString())
+                onCategoryClick = {
+                    val route = AppScreen.Main.CategoryDetail.createRoute(category = it.toString())
                     navController.navigate(route)
-                }
+                },
+                homeViewModel = homeViewModel
             )
         }
 
