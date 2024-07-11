@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.plateful.navigation.AppScreen
 import com.example.plateful.ui.screen.categoryFood.CategoryFoodScreen
+import com.example.plateful.ui.screen.categoryFood.CategoryFoodViewModel
 import com.example.plateful.ui.screen.favourites.FavouritesScreen
 import com.example.plateful.ui.screen.foodDetail.FoodDetailScreen
 import com.example.plateful.ui.screen.home.HomeScreen
@@ -17,7 +18,8 @@ import com.example.plateful.ui.screen.randomfood.RandomFoodScreen
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     rootNavBackStackEntry: State<NavBackStackEntry?>,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    categoryFoodViewModel: CategoryFoodViewModel
 ) {
     navigation(
         route = AppScreen.Main.route,
@@ -66,7 +68,9 @@ fun NavGraphBuilder.mainNavGraph(
                     onFoodClick = {
                         val route = AppScreen.Main.FoodDetail.createRoute(foodId = it)
                         navController.navigate(route)
-                    }
+                    },
+                    category = categoryName,
+                    categoryFoodViewModel = categoryFoodViewModel
                 )
             }
         }
