@@ -6,7 +6,7 @@ import com.example.plateful.model.Category
 data class HomeState(
     val scrollActionIdx: Int = 0,
     val scrollToItemIndex: Int = 0,
-    val selectedCategory: Category? = null
+    val selectedCategory: String? = ""
 )
 
 data class CategoryListState(
