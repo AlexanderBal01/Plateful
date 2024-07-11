@@ -9,11 +9,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.plateful.navigation.AppScreen
 import com.example.plateful.navigation.navGraphs.mainNavGraph
+import com.example.plateful.ui.screen.home.HomeViewModel
 
 @Composable
 fun NavComponent(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    homeViewModel: HomeViewModel
 ) {
     val rootNavBackStackEntry = navController.currentBackStackEntryAsState()
 
@@ -28,6 +30,6 @@ fun NavComponent(
             ExitTransition.None
         }
     ) {
-        mainNavGraph(navController, rootNavBackStackEntry)
+        mainNavGraph(navController, rootNavBackStackEntry, homeViewModel)
     }
 }
