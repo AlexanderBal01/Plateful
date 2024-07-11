@@ -1,4 +1,4 @@
-package com.example.plateful.ui.screen.fooddetail
+package com.example.plateful.ui.screen.foodDetail
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
