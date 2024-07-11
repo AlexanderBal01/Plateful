@@ -41,7 +41,6 @@ fun HomeScreen(
                     }
                 is CategoryApiState.Success ->
                     CategoryList(
-                        
                         categoryListState = categoryListState,
                         onCategoryClick = onCategoryClick
                     )
