@@ -14,18 +14,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plateful.R
 import com.example.plateful.ui.components.home.CategoryList
+import com.example.plateful.ui.viewModel.HomeViewModel
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onCategoryClick: (String) -> Unit,
-    homeViewModel: HomeViewModel,
+    homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
 ) {
-    val categoryOverviewState by homeViewModel.uiState.collectAsState()
     val categoryListState by homeViewModel.uiListState.collectAsState()
-    val workerState by homeViewModel.wifiWorkerState.collectAsState()
     val categoryApiState = homeViewModel.categoryApiState
 
     Column {
