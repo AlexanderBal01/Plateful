@@ -11,4 +11,7 @@
     <string name="could_not_load">Couldn\'t load</string>
     <string name="img_category">Image of category</string>
     <string name="navigate_to_category_item">Navigate to category item</string>
+    <string name="go_home">Go Home</string>
+    <string name="go_to_favourites">Go to favourites</string>
+    <string name="go_to_random">Go to random</string>
 </resources>
