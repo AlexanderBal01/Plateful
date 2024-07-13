@@ -1,4 +1,4 @@
-package com.example.plateful.ui.screen.home
+package com.example.plateful.ui.viewModel
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -12,6 +12,10 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.plateful.PlatefulApplication
 import com.example.plateful.data.CategoryRepository
+import com.example.plateful.ui.screen.home.CategoryApiState
+import com.example.plateful.ui.screen.home.CategoryListState
+import com.example.plateful.ui.screen.home.HomeState
+import com.example.plateful.ui.screen.home.WorkerState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
