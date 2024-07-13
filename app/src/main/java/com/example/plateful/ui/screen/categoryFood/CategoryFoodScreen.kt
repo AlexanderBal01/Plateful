@@ -14,20 +14,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plateful.R
 import com.example.plateful.ui.components.categoryFood.FoodList
+import com.example.plateful.ui.viewModel.CategoryFoodViewModel
 
 @Composable
 fun CategoryFoodScreen(
     modifier: Modifier = Modifier,
     onFoodClick: (String) -> Unit,
-    category: String = "",
-    categoryFoodViewModel: CategoryFoodViewModel
+    category: String,
+    categoryFoodViewModel: CategoryFoodViewModel = viewModel(factory = CategoryFoodViewModel.Factory)
 ) {
     categoryFoodViewModel.setSelectedCategory(category)
-    val categoryFoodState by categoryFoodViewModel.uiState.collectAsState()
+
     val foodListState by categoryFoodViewModel.uiListState.collectAsState()
-    val workerState by categoryFoodViewModel.wifiWorkerState.collectAsState()
     val foodApiState = categoryFoodViewModel.foodApiState
 
     Column {
