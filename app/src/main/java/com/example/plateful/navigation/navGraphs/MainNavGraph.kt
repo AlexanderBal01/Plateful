@@ -1,6 +1,5 @@
 package com.example.plateful.navigation.navGraphs
 
-import androidx.compose.runtime.State
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -8,18 +7,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.plateful.navigation.AppScreen
 import com.example.plateful.ui.screen.categoryFood.CategoryFoodScreen
-import com.example.plateful.ui.screen.categoryFood.CategoryFoodViewModel
 import com.example.plateful.ui.screen.favourites.FavouritesScreen
 import com.example.plateful.ui.screen.foodDetail.FoodDetailScreen
 import com.example.plateful.ui.screen.home.HomeScreen
-import com.example.plateful.ui.screen.home.HomeViewModel
 import com.example.plateful.ui.screen.randomfood.RandomFoodScreen
 
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
-    rootNavBackStackEntry: State<NavBackStackEntry?>,
-    homeViewModel: HomeViewModel,
-    categoryFoodViewModel: CategoryFoodViewModel
+    navBackStackEntry: NavBackStackEntry?,
 ) {
     navigation(
         route = AppScreen.Main.route,
@@ -32,8 +27,7 @@ fun NavGraphBuilder.mainNavGraph(
                 onCategoryClick = {
                     val route = AppScreen.Main.CategoryFood.createRoute(category = it)
                     navController.navigate(route)
-                },
-                homeViewModel = homeViewModel
+                }
             )
         }
 
@@ -62,23 +56,20 @@ fun NavGraphBuilder.mainNavGraph(
         composable(
             route = AppScreen.Main.CategoryFood.route
         ) {
-            val categoryName = rootNavBackStackEntry.value?.arguments?.getString("category")
-            if (categoryName != null) {
-                CategoryFoodScreen(
-                    onFoodClick = {
-                        val route = AppScreen.Main.FoodDetail.createRoute(foodId = it)
-                        navController.navigate(route)
-                    },
-                    category = categoryName,
-                    categoryFoodViewModel = categoryFoodViewModel
-                )
-            }
+            val categoryName = navBackStackEntry?.arguments?.getString("category")
+            CategoryFoodScreen(
+                onFoodClick = {
+                    val route = AppScreen.Main.FoodDetail.createRoute(foodId = it)
+                    navController.navigate(route)
+                },
+                category = categoryName!!
+            )
         }
 
         composable(
             route = AppScreen.Main.FoodDetail.route
         ) {
-            val foodId = rootNavBackStackEntry.value?.arguments?.getString("foodId")
+            val foodId = navBackStackEntry?.arguments?.getString("foodId")
             if (foodId != null) {
                 FoodDetailScreen(
                     navigateBack = {
