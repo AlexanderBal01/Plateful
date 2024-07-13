@@ -2,6 +2,9 @@ package com.example.plateful.ui.components.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
@@ -10,59 +13,87 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
+import com.example.plateful.R
 import com.example.plateful.navigation.AppScreen
 
 @Composable
 fun NavigationDrawerContent(
-    navController: NavHostController,
+    navController: NavController,
     selectedDestination: NavDestination?,
     modifier: Modifier = Modifier
 ) {
-    val navItems = listOf(
-        AppScreen.Main.Home,
-        AppScreen.Main.Favourites,
-        AppScreen.Main.RandomFood,
-    )
 
     Column(modifier = modifier.fillMaxHeight()) {
-        // Loop through each navItem in OverviewScreens
-        navItems.forEach{ item ->
-
-            NavigationDrawerItem(
-                // Check if the current navItem is selected
-                selected = selectedDestination?.route == item.route,
-                label = {
-                    Text(
-                        text = stringResource(id = item.title!!),
-                        style = MaterialTheme.typography.titleSmall
-                    )
-                },
-                icon = {
-                    Icon(
-                        imageVector = item.selectedIcon!!,
-                        contentDescription = item.route,
-                    )
-                },
-                colors = NavigationDrawerItemDefaults.colors(
-                    unselectedContainerColor = Color.Transparent,
-                    selectedContainerColor = MaterialTheme.colorScheme.primary,
-
-
-                ),
-                onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            )
-        }
+        NavigationDrawerItem(
+            selected = selectedDestination?.route == AppScreen.Main.Home.route,
+            label = {
+                Text(
+                    text = stringResource(id = AppScreen.Main.Home.title!!),
+                    style = MaterialTheme.typography.titleSmall
+                )
+            },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = AppScreen.Main.Home.route,
+                )
+            },
+            colors = NavigationDrawerItemDefaults.colors(
+                unselectedContainerColor = Color.Transparent,
+                selectedContainerColor = MaterialTheme.colorScheme.primary,
+            ),
+            onClick = {
+                navController.navigate(AppScreen.Main.Home.route)
+            }
+        )
+        NavigationDrawerItem(
+            selected = selectedDestination?.route == AppScreen.Main.Favourites.route,
+            label = {
+                Text(
+                    text = stringResource(id = AppScreen.Main.Favourites.title!!),
+                    style = MaterialTheme.typography.titleSmall
+                )
+            },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = AppScreen.Main.Favourites.route,
+                )
+            },
+            colors = NavigationDrawerItemDefaults.colors(
+                unselectedContainerColor = Color.Transparent,
+                selectedContainerColor = MaterialTheme.colorScheme.primary,
+            ),
+            onClick = {
+                navController.navigate(AppScreen.Main.Favourites.route)
+            }
+        )
+        NavigationDrawerItem(
+            selected = selectedDestination?.route == AppScreen.Main.RandomFood.route,
+            label = {
+                Text(
+                    text = stringResource(id = AppScreen.Main.RandomFood.title!!),
+                    style = MaterialTheme.typography.titleSmall
+                )
+            },
+            icon = {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.random),
+                    contentDescription = AppScreen.Main.RandomFood.route,
+                )
+            },
+            colors = NavigationDrawerItemDefaults.colors(
+                unselectedContainerColor = Color.Transparent,
+                selectedContainerColor = MaterialTheme.colorScheme.primary,
+            ),
+            onClick = {
+                navController.navigate(AppScreen.Main.RandomFood.route)
+            }
+        )
     }
 }
