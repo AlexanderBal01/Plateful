@@ -4,22 +4,18 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.plateful.navigation.AppScreen
 import com.example.plateful.navigation.navGraphs.mainNavGraph
-import com.example.plateful.ui.screen.categoryFood.CategoryFoodViewModel
-import com.example.plateful.ui.screen.home.HomeViewModel
 
 @Composable
 fun NavComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel,
-    categoryFoodViewModel: CategoryFoodViewModel
+    backStackEntry: NavBackStackEntry?,
 ) {
-    val rootNavBackStackEntry = navController.currentBackStackEntryAsState()
 
     NavHost(
         navController = navController,
@@ -32,6 +28,6 @@ fun NavComponent(
             ExitTransition.None
         }
     ) {
-        mainNavGraph(navController, rootNavBackStackEntry, homeViewModel, categoryFoodViewModel)
+        mainNavGraph(navController, backStackEntry)
     }
 }
