@@ -1,4 +1,4 @@
-package com.example.plateful.ui.screen.categoryFood
+package com.example.plateful.ui.viewModel
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -12,6 +12,10 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.plateful.PlatefulApplication
 import com.example.plateful.data.FoodRepository
+import com.example.plateful.ui.screen.categoryFood.CategoryFoodState
+import com.example.plateful.ui.screen.categoryFood.FoodApiState
+import com.example.plateful.ui.screen.categoryFood.FoodListState
+import com.example.plateful.ui.screen.categoryFood.WorkerState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +44,10 @@ class CategoryFoodViewModel(private val foodRepository: FoodRepository): ViewMod
 
     private fun getRepoCategoryFood() {
         try {
-            viewModelScope.launch { foodRepository.refresh(uiState.value.selectedCategory!!) }
+            viewModelScope.launch {
+                foodRepository.refresh(uiState.value.selectedCategory!!)
+                Log.i("vm inspection", "CategoryFoodViewModel getRepoCategoryFood")
+            }
 
             uiListState = foodRepository
                 .getByCategory(uiState.value.selectedCategory!!)
