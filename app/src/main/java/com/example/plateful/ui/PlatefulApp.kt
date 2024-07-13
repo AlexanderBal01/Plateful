@@ -9,13 +9,10 @@ import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,10 +20,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -37,33 +32,44 @@ import com.example.plateful.ui.components.navigation.NavigationDrawerContent
 import com.example.plateful.ui.components.navigation.PlatefulBottomBar
 import com.example.plateful.ui.components.navigation.PlatefulNavigationRail
 import com.example.plateful.ui.components.navigation.PlatefulTopAppBar
-import com.example.plateful.ui.screen.categoryFood.CategoryFoodViewModel
-import com.example.plateful.ui.screen.home.HomeViewModel
 import com.example.plateful.ui.util.NavigationType
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlatefulApp(
     modifier: Modifier = Modifier,
     navigationType: NavigationType,
-    rootNavHostController: NavHostController = rememberNavController(),
-    homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
-    categoryFoodViewModel: CategoryFoodViewModel = viewModel(factory = CategoryFoodViewModel.Factory)
+    navController: NavHostController = rememberNavController(),
 ) {
+    val backStackEntry by navController.currentBackStackEntryAsState()
     val topAppbarTitle = remember { mutableStateOf("") }
-    val topAppBarState = rememberTopAppBarState()
-    val barScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = topAppBarState)
+
+    val goHome: () -> Unit = {
+        navController.popBackStack(
+            AppScreen.Main.Home.route,
+            inclusive = false
+        )
+    }
+
+    val goToFavourites = {
+        navController.navigate(AppScreen.Main.Favourites.route) {
+            launchSingleTop = true
+        }
+    }
+
+    val goToRandom = {
+        navController.navigate(AppScreen.Main.RandomFood.route) {
+            launchSingleTop = true
+        }
+    }
 
     val showBottomBarState = rememberSaveable { (mutableStateOf(true)) }
     val showTopBarState = rememberSaveable { (mutableStateOf(true)) }
 
-    val rootNavBackStackEntry by rootNavHostController.currentBackStackEntryAsState()
+    val canNavigateBack = navController.previousBackStackEntry != null
 
-    val canNavigateBack = rootNavHostController.previousBackStackEntry != null
+    val navigateUp: () -> Unit = { navController.navigateUp() }
 
-    val navigateUp: () -> Unit = { rootNavHostController.navigateUp() }
-
-    when (rootNavBackStackEntry?.destination?.route) {
+    when (backStackEntry?.destination?.route) {
         AppScreen.Main.Home.route -> {
             showBottomBarState.value = true
             showTopBarState.value = true
@@ -114,8 +120,8 @@ fun PlatefulApp(
                         windowInsets = WindowInsets.ime
                     ) {
                         NavigationDrawerContent(
-                            selectedDestination = rootNavHostController.currentDestination,
-                            navController = rootNavHostController,
+                            selectedDestination = navController.currentDestination,
+                            navController = navController,
                             modifier = modifier
                                 .wrapContentWidth()
                                 .fillMaxHeight()
@@ -131,22 +137,19 @@ fun PlatefulApp(
                 Scaffold(
                     containerColor = Color.Transparent,
                     modifier = modifier
-                        .fillMaxSize()
-                        .nestedScroll(barScrollBehavior.nestedScrollConnection),
+                        .fillMaxSize(),
                     topBar = {
                         PlatefulTopAppBar(
                             title = topAppbarTitle.value,
                             canNavigateBack = canNavigateBack,
-                            barScrollBehavior = barScrollBehavior,
                             navigateUp = navigateUp
                         )
                     }
                 ) { innerPadding ->
                     NavComponent(
-                        navController = rootNavHostController,
+                        navController = navController,
                         modifier = modifier.padding(innerPadding),
-                        homeViewModel = homeViewModel,
-                        categoryFoodViewModel = categoryFoodViewModel
+                        backStackEntry = backStackEntry
                     )
                 }
             }
@@ -159,30 +162,31 @@ fun PlatefulApp(
                     PlatefulTopAppBar(
                         title = topAppbarTitle.value,
                         canNavigateBack = canNavigateBack,
-                        barScrollBehavior = barScrollBehavior,
                         navigateUp = navigateUp
                     )
                 },
                 bottomBar = {
                     PlatefulBottomBar(
-                        navController = rootNavHostController,
-                        selectedDestination = rootNavHostController.currentDestination
+                        goHome = goHome,
+                        goToFavourites = goToFavourites,
+                        goToRandom = goToRandom,
+                        selectedDestination = navController.currentDestination
                     )
                 }
             ) { innerPadding ->
                 NavComponent(
-                    navController = rootNavHostController,
+                    navController = navController,
                     modifier = modifier.padding(innerPadding),
-                    homeViewModel = homeViewModel,
-                    categoryFoodViewModel = categoryFoodViewModel
+                    backStackEntry = backStackEntry
                 )
             }
         }
+
         else -> {
                 AnimatedVisibility(visible = navigationType == NavigationType.NAVIGATION_RAIL) {
                     PlatefulNavigationRail(
-                        selectedDestination = rootNavHostController.currentDestination,
-                        navController = rootNavHostController
+                        selectedDestination = navController.currentDestination,
+                        navController = navController
                     )
                 }
                 Scaffold (
@@ -191,17 +195,15 @@ fun PlatefulApp(
                         PlatefulTopAppBar(
                             title = topAppbarTitle.value,
                             canNavigateBack = canNavigateBack,
-                            barScrollBehavior = barScrollBehavior,
                             navigateUp = navigateUp
                         )
                     },
                 ) { innerPadding ->
                     // Navigation component for handling different screens.
                     NavComponent(
-                        navController = rootNavHostController,
+                        navController = navController,
                         modifier = modifier.padding(innerPadding),
-                        homeViewModel = homeViewModel,
-                        categoryFoodViewModel = categoryFoodViewModel
+                        backStackEntry = backStackEntry
                     )
                 }
 
