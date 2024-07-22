@@ -14,19 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plateful.R
 import com.example.plateful.ui.components.home.CategoryList
-import com.example.plateful.ui.viewModel.HomeViewModel
+import com.example.plateful.ui.uiState.home.CategoryApiState
+import com.example.plateful.ui.viewModel.PlatefulViewModel
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onCategoryClick: (String) -> Unit,
-    homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
+    platefulViewModel: PlatefulViewModel,
 ) {
-    val categoryListState by homeViewModel.uiListState.collectAsState()
-    val categoryApiState = homeViewModel.categoryApiState
+    val categoryListState by platefulViewModel.homeUiListState.collectAsState()
+    val categoryApiState = platefulViewModel.categoryApiState
 
     Column {
         Box(modifier = modifier.fillMaxSize()) {
