@@ -12,7 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -28,14 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.plateful.R
+import com.example.plateful.model.Food
 
 @Composable
 fun FoodItem(
     modifier: Modifier = Modifier,
-    name: String,
-    img: String,
-    id: String,
-    onFoodClick: (String) -> Unit
+    food: Food,
+    onFoodClick: (Food) -> Unit
 ) {
     Card(
         modifier = modifier
@@ -48,7 +48,7 @@ fun FoodItem(
                 )
             )
             .clickable {
-                onFoodClick(id)
+                onFoodClick(food)
             }, // Use clickable for better semantics
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
@@ -63,14 +63,14 @@ fun FoodItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = img,
+                model = food.imageUrl,
                 contentDescription = stringResource(id = R.string.img_category),
                 modifier = modifier.width(60.dp)
             )
             
             Column (modifier = modifier.width(dimensionResource(id = R.dimen.text_column_width))) {
                 Text(
-                    text = name,
+                    text = food.name,
                     color = MaterialTheme.colorScheme.onSecondary,
                     fontSize = 20.sp,
                     style = MaterialTheme.typography.bodyLarge,
@@ -79,12 +79,9 @@ fun FoodItem(
 
                 )
             }
-            // Text content
-            
 
-            // Right arrow icon
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                imageVector = if(food.favourite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                 contentDescription = stringResource(R.string.navigate_to_category_item),
                 tint = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier.size(39.dp) // Used dp instead of dimensionResource for clarity
