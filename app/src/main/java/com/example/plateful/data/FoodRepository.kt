@@ -85,7 +85,8 @@ class CashingFoodRepository(
                 .asDomainObject()
                 .collect {
                     for (food in it) {
-                        insertFood(food)
+                        val newFood = food.copy(category = category)
+                        insertFood(newFood)
                     }
                 }
         } catch (e: SocketTimeoutException) {
