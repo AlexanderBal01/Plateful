@@ -9,7 +9,7 @@ private object Routes {
     const val RANDOMFOOD = "random"
     const val FAVOURITES = "favourites"
     const val CATEGORY_FOOD = "categoryFood/{${ArgParams.CATEGORY}}"
-    const val FOODDETAIL = "foodDetail/{${ArgParams.FOOD_ID}}"
+    const val FOOD_DETAIL = "foodDetail/{${ArgParams.FOOD_ID}}"
 }
 
 private object ArgParams {
@@ -42,11 +42,11 @@ sealed class AppScreen {
         )
 
         data object FoodDetail: TopLevelDestination(
-            route = Routes.FOODDETAIL,
+            route = Routes.FOOD_DETAIL,
             title = R.string.food_detail
         ) {
             fun createRoute(foodId: String) =
-                Routes.FOODDETAIL
+                Routes.FOOD_DETAIL
                     .replace(ArgParams.toPath(ArgParams.FOOD_ID), foodId)
         }
 
