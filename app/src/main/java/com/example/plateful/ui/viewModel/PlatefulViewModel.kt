@@ -13,22 +13,14 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.plateful.PlatefulApplication
 import com.example.plateful.data.CategoryRepository
 import com.example.plateful.data.FoodRepository
-import com.example.plateful.data.FullMealRepository
-import com.example.plateful.ui.uiState.categoryFood.CategoryFoodListState
-import com.example.plateful.ui.uiState.categoryFood.CategoryFoodState
-import com.example.plateful.ui.uiState.categoryFood.FoodApiState
-import com.example.plateful.ui.uiState.categoryFood.WorkerStateCategoryFood
-import com.example.plateful.ui.uiState.foodDetail.FoodDetailListState
-import com.example.plateful.ui.uiState.foodDetail.FullMealApiState
-import com.example.plateful.ui.uiState.foodDetail.WorkerStateFoodDetail
-import com.example.plateful.ui.uiState.home.CategoryApiState
-import com.example.plateful.ui.uiState.home.CategoryListState
-import com.example.plateful.ui.uiState.home.HomeState
-import com.example.plateful.ui.uiState.home.WorkerStateHome
+import com.example.plateful.ui.uiState.CategoryApiState
+import com.example.plateful.ui.uiState.FoodApiState
+import com.example.plateful.ui.uiState.PlatefulListsState
+import com.example.plateful.ui.uiState.PlatefulUiState
+import com.example.plateful.ui.uiState.PlatefulWorkerState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -37,18 +29,11 @@ import java.io.IOException
 
 class PlatefulViewModel(
     private val categoryRepository: CategoryRepository,
-    private val foodRepository: FoodRepository,
-    private val fullMealRepository: FullMealRepository
+    private val foodRepository: FoodRepository
 ): ViewModel() {
-    private val _homeUiState = MutableStateFlow(HomeState())
-    val homeUiState: StateFlow<HomeState> = _homeUiState.asStateFlow()
+    private val _platefulUiState = MutableStateFlow(PlatefulUiState())
 
-    private val _categoryFoodUiState = MutableStateFlow(CategoryFoodState())
-    val categoryFoodUiState: StateFlow<CategoryFoodState> = _categoryFoodUiState.asStateFlow()
-
-    lateinit var homeUiListState: StateFlow<CategoryListState>
-    lateinit var categoryFoodUiListState: StateFlow<CategoryFoodListState>
-    lateinit var foodDetailUiListState: StateFlow<FoodDetailListState>
+    lateinit var platefulUiListsState: StateFlow<PlatefulListsState>
 
     var categoryApiState: CategoryApiState by mutableStateOf(CategoryApiState.Loading)
         private set
@@ -56,44 +41,38 @@ class PlatefulViewModel(
     var foodApiState: FoodApiState by mutableStateOf(FoodApiState.Loading)
         private set
 
-    var fullMealApiState: FullMealApiState by mutableStateOf(FullMealApiState.Loading)
-        private set
-
-    lateinit var wifiWorkerStateHome: StateFlow<WorkerStateHome>
-    lateinit var wifiWorkerStateCategoryFood: StateFlow<WorkerStateCategoryFood>
-    lateinit var wifiWorkerStateFoodDetail: StateFlow<WorkerStateFoodDetail>
+    private lateinit var platefulWorkerState: StateFlow<PlatefulWorkerState>
 
     init {
-        getRepoCategories()
         Log.i("vm inspection", "PlatefulViewModel init")
     }
 
-    private fun getRepoCategories() {
+    fun getRepoCategories() {
         try {
             viewModelScope.launch { categoryRepository.refresh() }
 
-            homeUiListState = categoryRepository
+            platefulUiListsState = categoryRepository
                 .getAll()
                 .map {
-                    CategoryListState(it)
+                    platefulUiListsState.value.copy(categoryList = it)
                 }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = CategoryListState()
+                    initialValue = PlatefulListsState()
                 )
 
             categoryApiState = CategoryApiState.Success
 
-            wifiWorkerStateHome = categoryRepository
+            platefulWorkerState = categoryRepository
                 .wifiWorkInfo
                 .map {
-                    WorkerStateHome(it)
+                    PlatefulWorkerState(it)
                 }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = WorkerStateHome()
+                    initialValue = PlatefulWorkerState()
                 )
         } catch (e: IOException) {
             categoryApiState = CategoryApiState.Error
@@ -102,65 +81,63 @@ class PlatefulViewModel(
 
     fun getRepoFoodByCategory() {
         try {
-            viewModelScope.launch { foodRepository.refresh(_homeUiState.value.selectedCategory) }
+            viewModelScope.launch { foodRepository.refresh(_platefulUiState.value.selectedCategory) }
 
-            categoryFoodUiListState = foodRepository
-                .getByCategory(_homeUiState.value.selectedCategory)
+            platefulUiListsState = foodRepository
+                .getByCategory(_platefulUiState.value.selectedCategory)
                 .map {
-                    CategoryFoodListState(it)
+                    platefulUiListsState.value.copy(foodList = it)
                 }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = CategoryFoodListState()
+                    initialValue = PlatefulListsState()
                 )
 
             foodApiState = FoodApiState.Success
 
-            wifiWorkerStateCategoryFood = foodRepository
+             platefulWorkerState = foodRepository
                 .wifiWorkInfo
                 .map {
-                    WorkerStateCategoryFood(it)
+                    PlatefulWorkerState(it)
                 }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = WorkerStateCategoryFood()
+                    initialValue = PlatefulWorkerState()
                 )
         } catch (e: IOException) {
             foodApiState = FoodApiState.Error
         }
     }
 
-    fun getRepoFullMeal() {
+    fun getRepoFoodByFavourite() {
         try {
-            viewModelScope.launch { fullMealRepository.refresh(_categoryFoodUiState.value.selectedFood) }
-
-            foodDetailUiListState = fullMealRepository
-                .getFullMeal(_categoryFoodUiState.value.selectedFood)
+            platefulUiListsState = foodRepository
+                .getFavourites()
                 .map {
-                    FoodDetailListState(it)
+                    platefulUiListsState.value.copy(favouritesList = it)
                 }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = FoodDetailListState()
+                    initialValue = PlatefulListsState()
                 )
 
-            fullMealApiState = FullMealApiState.Success
+            foodApiState = FoodApiState.Success
 
-            wifiWorkerStateFoodDetail = fullMealRepository
+            platefulWorkerState = foodRepository
                 .wifiWorkInfo
                 .map {
-                    WorkerStateFoodDetail(it)
+                    PlatefulWorkerState(it)
                 }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = WorkerStateFoodDetail()
+                    initialValue = PlatefulWorkerState()
                 )
         } catch (e: IOException) {
-            fullMealApiState = FullMealApiState.Error
+            foodApiState = FoodApiState.Error
         }
     }
 
@@ -170,18 +147,20 @@ class PlatefulViewModel(
     }
 
     fun setSelectedCategory(category: String) {
-        _homeUiState.update { state ->
+        _platefulUiState.update { state ->
             state.copy(
                 selectedCategory = category
             )
         }
     }
 
-    fun setSelectedFood(food: String) {
-        _categoryFoodUiState.update { state ->
-            state.copy(
-                selectedFood = food
-            )
+    fun setFavourite(favourite: Boolean, id: String) {
+        try {
+            viewModelScope.launch {
+                foodRepository.setFavourite(id, favourite)
+            }
+        } catch (e: IOException) {
+            foodApiState = FoodApiState.Error
         }
     }
 
@@ -194,8 +173,7 @@ class PlatefulViewModel(
                     val application = (this[APPLICATION_KEY] as PlatefulApplication)
                     val categoryRepository = application.container.categoryRepository
                     val foodRepository = application.container.foodRepository
-                    val fullMealRepository = application.container.fullMealRepository
-                    Instance = PlatefulViewModel(categoryRepository = categoryRepository, foodRepository = foodRepository, fullMealRepository = fullMealRepository)
+                    Instance = PlatefulViewModel(categoryRepository = categoryRepository, foodRepository = foodRepository)
                 }
                 Instance!!
             }
