@@ -14,22 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plateful.R
 import com.example.plateful.ui.components.categoryFood.FoodList
-import com.example.plateful.ui.viewModel.CategoryFoodViewModel
+import com.example.plateful.ui.uiState.categoryFood.FoodApiState
+import com.example.plateful.ui.viewModel.PlatefulViewModel
 
 @Composable
 fun CategoryFoodScreen(
     modifier: Modifier = Modifier,
     onFoodClick: (String) -> Unit,
-    category: String,
-    categoryFoodViewModel: CategoryFoodViewModel = viewModel(factory = CategoryFoodViewModel.Factory)
+    platefulViewModel: PlatefulViewModel
 ) {
-    categoryFoodViewModel.setSelectedCategory(category)
-
-    val foodListState by categoryFoodViewModel.uiListState.collectAsState()
-    val foodApiState = categoryFoodViewModel.foodApiState
+    val categoryFoodListState by platefulViewModel.categoryFoodUiListState.collectAsState()
+    val foodApiState = platefulViewModel.foodApiState
 
     Column {
         Box(modifier = modifier.fillMaxSize()) {
@@ -64,7 +61,7 @@ fun CategoryFoodScreen(
 
                 is FoodApiState.Success ->
                     FoodList(
-                        foodListState = foodListState,
+                        foodListState = categoryFoodListState,
                         onFoodClick = onFoodClick
                     )
             }
