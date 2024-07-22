@@ -9,12 +9,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.plateful.navigation.AppScreen
 import com.example.plateful.navigation.navGraphs.mainNavGraph
+import com.example.plateful.ui.viewModel.PlatefulViewModel
 
 @Composable
 fun NavComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     backStackEntry: NavBackStackEntry?,
+    platefulViewModel: PlatefulViewModel
 ) {
 
     NavHost(
@@ -28,6 +30,6 @@ fun NavComponent(
             ExitTransition.None
         }
     ) {
-        mainNavGraph(navController, backStackEntry)
+        mainNavGraph(navController, backStackEntry, platefulViewModel)
     }
 }

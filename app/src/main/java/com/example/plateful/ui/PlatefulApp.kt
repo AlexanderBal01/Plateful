@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -33,12 +34,14 @@ import com.example.plateful.ui.components.navigation.PlatefulBottomBar
 import com.example.plateful.ui.components.navigation.PlatefulNavigationRail
 import com.example.plateful.ui.components.navigation.PlatefulTopAppBar
 import com.example.plateful.ui.util.NavigationType
+import com.example.plateful.ui.viewModel.PlatefulViewModel
 
 @Composable
 fun PlatefulApp(
     modifier: Modifier = Modifier,
     navigationType: NavigationType,
     navController: NavHostController = rememberNavController(),
+    platefulViewModel: PlatefulViewModel = viewModel(factory = PlatefulViewModel.Factory)
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val topAppbarTitle = remember { mutableStateOf("") }
@@ -149,7 +152,8 @@ fun PlatefulApp(
                     NavComponent(
                         navController = navController,
                         modifier = modifier.padding(innerPadding),
-                        backStackEntry = backStackEntry
+                        backStackEntry = backStackEntry,
+                        platefulViewModel = platefulViewModel
                     )
                 }
             }
@@ -177,7 +181,8 @@ fun PlatefulApp(
                 NavComponent(
                     navController = navController,
                     modifier = modifier.padding(innerPadding),
-                    backStackEntry = backStackEntry
+                    backStackEntry = backStackEntry,
+                    platefulViewModel = platefulViewModel
                 )
             }
         }
@@ -203,7 +208,8 @@ fun PlatefulApp(
                     NavComponent(
                         navController = navController,
                         modifier = modifier.padding(innerPadding),
-                        backStackEntry = backStackEntry
+                        backStackEntry = backStackEntry,
+                        platefulViewModel = platefulViewModel
                     )
                 }
 

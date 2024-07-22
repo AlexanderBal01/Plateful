@@ -11,10 +11,12 @@ import com.example.plateful.ui.screen.favourites.FavouritesScreen
 import com.example.plateful.ui.screen.foodDetail.FoodDetailScreen
 import com.example.plateful.ui.screen.home.HomeScreen
 import com.example.plateful.ui.screen.randomfood.RandomFoodScreen
+import com.example.plateful.ui.viewModel.PlatefulViewModel
 
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     navBackStackEntry: NavBackStackEntry?,
+    platefulViewModel: PlatefulViewModel
 ) {
     navigation(
         route = AppScreen.Main.route,
@@ -25,9 +27,12 @@ fun NavGraphBuilder.mainNavGraph(
         ) {
             HomeScreen(
                 onCategoryClick = {
+                    platefulViewModel.setSelectedCategory(it)
+                    platefulViewModel.getRepoFoodByCategory()
                     val route = AppScreen.Main.CategoryFood.createRoute(category = it)
                     navController.navigate(route)
-                }
+                },
+                platefulViewModel = platefulViewModel
             )
         }
 
@@ -36,7 +41,9 @@ fun NavGraphBuilder.mainNavGraph(
         ) {
             RandomFoodScreen(
                 onButtonClick = {
-                    val route = AppScreen.Main.FoodDetail.createRoute(foodId = it.toString())
+                    platefulViewModel.setSelectedFood(it)
+                    platefulViewModel.getRepoFullMeal()
+                    val route = AppScreen.Main.FoodDetail.createRoute(foodId = it)
                     navController.navigate(route)
                 }
             )
@@ -47,7 +54,9 @@ fun NavGraphBuilder.mainNavGraph(
         ) {
             FavouritesScreen(
                 onFoodClick = {
-                    val route = AppScreen.Main.FoodDetail.createRoute(foodId = it.toString())
+                    platefulViewModel.setSelectedFood(it)
+                    val route = AppScreen.Main.FoodDetail.createRoute(foodId = it)
+                    platefulViewModel.getRepoFullMeal()
                     navController.navigate(route)
                 }
             )
@@ -56,27 +65,21 @@ fun NavGraphBuilder.mainNavGraph(
         composable(
             route = AppScreen.Main.CategoryFood.route
         ) {
-            val categoryName = navBackStackEntry?.arguments?.getString("category")
             CategoryFoodScreen(
                 onFoodClick = {
+                    platefulViewModel.setSelectedFood(it)
+                    platefulViewModel.getRepoFullMeal()
                     val route = AppScreen.Main.FoodDetail.createRoute(foodId = it)
                     navController.navigate(route)
                 },
-                category = categoryName!!
+                platefulViewModel = platefulViewModel
             )
         }
 
         composable(
             route = AppScreen.Main.FoodDetail.route
         ) {
-            val foodId = navBackStackEntry?.arguments?.getString("foodId")
-            if (foodId != null) {
-                FoodDetailScreen(
-                    navigateBack = {
-                        navController.navigateUp()
-                    }
-                )
-            }
+            FoodDetailScreen(platefulViewModel = platefulViewModel)
         }
     }
 }
