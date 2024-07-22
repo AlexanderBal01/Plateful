@@ -8,6 +8,7 @@
     <string name="go_back">Go back</string>
     <string name="category_detail">Category food</string>
     <string name="loading">loading</string>
+    <string name="no_favourites">You don\'t have any favourites</string>
     <string name="could_not_load">Couldn\'t load</string>
     <string name="img_category">Image of category</string>
     <string name="navigate_to_category_item">Navigate to category item</string>
