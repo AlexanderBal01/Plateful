@@ -4,7 +4,6 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.plateful.navigation.AppScreen
@@ -15,7 +14,6 @@ import com.example.plateful.ui.viewModel.PlatefulViewModel
 fun NavComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    backStackEntry: NavBackStackEntry?,
     platefulViewModel: PlatefulViewModel
 ) {
 
@@ -30,6 +28,6 @@ fun NavComponent(
             ExitTransition.None
         }
     ) {
-        mainNavGraph(navController, backStackEntry, platefulViewModel)
+        mainNavGraph(navController, platefulViewModel)
     }
 }
