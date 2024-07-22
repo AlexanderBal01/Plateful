@@ -4,6 +4,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun FavouritesScreen(onFoodClick: () -> Unit) {
+fun FavouritesScreen(onFoodClick: (String) -> Unit) {
     Text(text = "Favourites")
 }
