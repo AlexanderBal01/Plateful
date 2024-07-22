@@ -30,6 +30,8 @@ interface FoodRepository {
 
     suspend fun insertFood(food: Food)
 
+    suspend fun setFavourite(food: String, favourite: Boolean)
+
     suspend fun refresh(category: String)
 
     var wifiWorkInfo: Flow<WorkInfo>
@@ -65,6 +67,10 @@ class CashingFoodRepository(
 
     override suspend fun insertFood(food: Food) {
         foodDao.insert(food.asDbFoodObject())
+    }
+
+    override suspend fun setFavourite(food: String, favourite: Boolean) {
+        foodDao.setFavourite(food, favourite)
     }
 
     override suspend fun refresh(category: String) {
