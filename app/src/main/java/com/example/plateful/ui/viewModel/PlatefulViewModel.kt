@@ -65,7 +65,7 @@ class PlatefulViewModel(
 
     init {
         getRepoCategories()
-        Log.i("vm inspection", "HomeViewModel init")
+        Log.i("vm inspection", "PlatefulViewModel init")
     }
 
     private fun getRepoCategories() {
@@ -166,7 +166,7 @@ class PlatefulViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        Log.i("vm inspection", "HomeViewModel cleared")
+        Log.i("vm inspection", "PlatefulViewModel cleared")
     }
 
     fun setSelectedCategory(category: String) {
