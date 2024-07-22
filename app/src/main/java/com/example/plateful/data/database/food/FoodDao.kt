@@ -8,8 +8,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FoodDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: DbFood)
+
+    @Query("UPDATE food SET favourite = :favourite WHERE id = :foodId")
+    suspend fun setFavourite(foodId: String, favourite: Boolean)
 
     @Query("SELECT * FROM food WHERE favourite = true")
     fun getFavourites(): Flow<List<DbFood>>
