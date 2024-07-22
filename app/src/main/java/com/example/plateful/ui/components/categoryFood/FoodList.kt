@@ -4,11 +4,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import com.example.plateful.ui.screen.categoryFood.FoodListState
+import com.example.plateful.ui.uiState.categoryFood.CategoryFoodListState
 
 @Composable
 fun FoodList(
-    foodListState: FoodListState,
+    foodListState: CategoryFoodListState,
     onFoodClick: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
