@@ -47,7 +47,9 @@ fun FoodItem(
                     stiffness = Spring.StiffnessMedium
                 )
             )
-            .clickable { onFoodClick(id) }, // Use clickable for better semantics
+            .clickable {
+                onFoodClick(id)
+            }, // Use clickable for better semantics
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         )
