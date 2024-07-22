@@ -59,12 +59,6 @@ fun PlatefulApp(
         }
     }
 
-    val goToRandom = {
-        navController.navigate(AppScreen.Main.RandomFood.route) {
-            launchSingleTop = true
-        }
-    }
-
     val showBottomBarState = rememberSaveable { (mutableStateOf(true)) }
     val showTopBarState = rememberSaveable { (mutableStateOf(true)) }
 
@@ -80,24 +74,11 @@ fun PlatefulApp(
 
         }
 
-        AppScreen.Main.RandomFood.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.RandomFood.title!!)
-        }
-
         AppScreen.Main.Favourites.route -> {
             showBottomBarState.value = true
             showTopBarState.value = true
             topAppbarTitle.value = stringResource(AppScreen.Main.Favourites.title!!)
         }
-
-        AppScreen.Main.FoodDetail.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.FoodDetail.title!!)
-        }
-        
         AppScreen.Main.CategoryFood.route -> {
             showBottomBarState.value = true
             showTopBarState.value = true
@@ -152,7 +133,6 @@ fun PlatefulApp(
                     NavComponent(
                         navController = navController,
                         modifier = modifier.padding(innerPadding),
-                        backStackEntry = backStackEntry,
                         platefulViewModel = platefulViewModel
                     )
                 }
@@ -173,7 +153,6 @@ fun PlatefulApp(
                     PlatefulBottomBar(
                         goHome = goHome,
                         goToFavourites = goToFavourites,
-                        goToRandom = goToRandom,
                         selectedDestination = navController.currentDestination
                     )
                 }
@@ -181,7 +160,6 @@ fun PlatefulApp(
                 NavComponent(
                     navController = navController,
                     modifier = modifier.padding(innerPadding),
-                    backStackEntry = backStackEntry,
                     platefulViewModel = platefulViewModel
                 )
             }
@@ -208,7 +186,6 @@ fun PlatefulApp(
                     NavComponent(
                         navController = navController,
                         modifier = modifier.padding(innerPadding),
-                        backStackEntry = backStackEntry,
                         platefulViewModel = platefulViewModel
                     )
                 }
