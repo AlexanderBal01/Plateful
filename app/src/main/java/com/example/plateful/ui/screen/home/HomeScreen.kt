@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.plateful.R
 import com.example.plateful.ui.components.home.CategoryList
-import com.example.plateful.ui.uiState.home.CategoryApiState
+import com.example.plateful.ui.uiState.CategoryApiState
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
 @Composable
@@ -25,7 +25,7 @@ fun HomeScreen(
     onCategoryClick: (String) -> Unit,
     platefulViewModel: PlatefulViewModel,
 ) {
-    val categoryListState by platefulViewModel.homeUiListState.collectAsState()
+    val categoryListState by platefulViewModel.platefulUiListsState.collectAsState()
     val categoryApiState = platefulViewModel.categoryApiState
 
     Column {
