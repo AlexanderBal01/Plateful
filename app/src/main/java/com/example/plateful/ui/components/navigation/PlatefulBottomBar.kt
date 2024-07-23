@@ -36,7 +36,7 @@ fun PlatefulBottomBar(
             label = {
                 Text(
                     text = stringResource(id = AppScreen.Main.Home.title!!),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             },
             icon = {

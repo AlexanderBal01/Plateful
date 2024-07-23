@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.androidx.material3.window.size)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.room.common)
+    implementation(libs.androidx.navigation.testing)
     ksp(libs.androidx.room.compiler)
     implementation(libs.coil.kt)
     implementation(libs.squareup.retrofit2)
