@@ -17,7 +17,25 @@ import com.example.plateful.ui.PlatefulApp
 import com.example.plateful.ui.theme.PlatefulTheme
 import com.example.plateful.ui.util.NavigationType
 
+/**
+ * The main activity of the Plateful application.
+ *
+ * This activity serves as the entry point for the app and is responsiblefor setting up the main UI.
+ * It typically hosts a single fragment or a Jetpack Compose navigation component.
+ */
 class MainActivity : ComponentActivity() {
+
+    /**
+     * Called when the activity is starting.
+     *
+     * This method is responsible for initializing the activity and setting up its content view.
+     * It typically inflates the main layout, sets up any necessary UI components, and handles
+     * initial setup tasks.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     * shutdown then this Bundle contains the data it most recently supplied in
+     * {@link #onSaveInstanceState}.  **Note: Otherwise it is null.**
+     */
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

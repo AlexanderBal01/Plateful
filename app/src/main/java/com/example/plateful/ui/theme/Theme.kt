@@ -1,3 +1,8 @@
+/**
+ * This file defines the color themes used throughout the Plateful application.
+ * It provides three base color schemes: light, dark, and medium contrast for both light and dark themes.
+ * Each base scheme has corresponding color sets for primary, secondary, tertiary, etc. elements.
+ */
 package com.example.plateful.ui.theme
 
 import android.app.Activity
@@ -239,7 +244,17 @@ private val highContrastDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
 
-
+/**
+ * The PlatefulTheme composable function sets the Material Theme for the application.
+ * It takes an optional `darkTheme` parameter that defaults to following the system's dark theme setting.
+ * Based on the `darkTheme` value, it selects the appropriate color scheme (light or dark).
+ * It also sets the status bar color to match the primary color of the chosen scheme.
+ *
+ * This function should be used as the root composable for your application.
+ *
+ * @param darkTheme: Boolean (optional) - Whether to use the dark theme or not. Defaults to following system setting.
+ * @param content: @Composable - The content composable to be rendered within the theme.
+ */
 @Composable
 fun PlatefulTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

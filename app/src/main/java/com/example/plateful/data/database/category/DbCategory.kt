@@ -4,6 +4,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.plateful.model.Category
 
+/**
+ * Entity class representing a category in the local database.
+ *
+ * @property id The unique identifier for the category, serving as the primary key.
+ * @property name The name of the category.
+ * @property description A brief description of the category.
+ * @property img The URL of the image associated with the category.
+ */
 @Entity(tableName = "category")
 data class DbCategory(
     @PrimaryKey
@@ -13,6 +21,11 @@ data class DbCategory(
     val img: String = ""
 )
 
+/**
+ * Extension function to convert a [DbCategory] entity to a [Category] domain model object.
+ *
+ * @return A [Category] object representing the same data as the [DbCategory].
+ */
 fun DbCategory.asDomainCategoryObject(): Category {
     return Category(
         id = this.id,
@@ -22,6 +35,11 @@ fun DbCategory.asDomainCategoryObject(): Category {
     )
 }
 
+/**
+ * Extension function to convert a [Category] domain model object to a [DbCategory] entity.
+ *
+ * @return A [DbCategory] object representing the same data as the [Category].
+ */
 fun Category.asDbCategoryObject(): DbCategory {
     return DbCategory(
         id = this.id,
@@ -31,6 +49,11 @@ fun Category.asDbCategoryObject(): DbCategory {
     )
 }
 
+/**
+ * Extension function to convert a list of [DbCategory] entities to a list of [Category] domain model objects.
+ *
+ * @return A list of [Category] objects representing the same data as the list of [DbCategory] entities.
+ */
 fun List<DbCategory>.asDomainCategoryObjects(): List<Category> {
     return this.map {
         Category(

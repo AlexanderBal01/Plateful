@@ -26,6 +26,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.plateful.R
 
+/**
+ * This composable function renders a single category item on the home screen.
+ *
+ * @param modifier - Modifier to be applied to the composable. (Optional)
+ * @param name - The name of the category.
+ * @param img - The URL of the image representing the category.
+ * @param onCategoryClick - A callback function that is triggered when the category item is clicked.
+ */
 @Composable
 fun CategoryItem(
     modifier: Modifier = Modifier,

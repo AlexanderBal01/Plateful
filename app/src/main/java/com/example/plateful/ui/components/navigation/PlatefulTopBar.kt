@@ -16,6 +16,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.example.plateful.R
 
+/**
+ * This composable function renders a top app bar for the Plateful app.
+ *
+ * @param title The title to be displayed on the app bar.
+ * @param canNavigateBack A boolean indicating whether the user can navigate back from the current screen.
+ * @param navigateUp The callback function to be triggered when the back button is clicked (if available).
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlatefulTopAppBar(

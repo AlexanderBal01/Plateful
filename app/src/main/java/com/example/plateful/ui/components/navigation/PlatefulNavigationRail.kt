@@ -17,6 +17,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.example.plateful.navigation.AppScreen
 
+/**
+ * This composable function renders a navigation rail for the Plateful app.
+ *
+ * @param modifier (Optional) Modifier to be applied to the NavigationRail.
+ * @param selectedDestination (Optional) The currently selected navigation destination.
+ * @param navController The NavController instance used for navigation.
+ */
 @Composable
 fun PlatefulNavigationRail(
     modifier: Modifier = Modifier,

@@ -31,6 +31,13 @@ import coil.compose.AsyncImage
 import com.example.plateful.R
 import com.example.plateful.model.Food
 
+/**
+ * This composable function renders a single food item in a list.
+ *
+ * @param modifier - Modifier to be applied to the composable.
+ * @param food - The Food data object representing the food item.
+ * @param onFoodClick - A callback function that is triggered when the food item is clicked.
+ */
 @Composable
 fun FoodItem(
     modifier: Modifier = Modifier,

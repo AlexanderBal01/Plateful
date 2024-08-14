@@ -10,11 +10,23 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Interface representing the application container that provides access to various repositories.
+ *
+ * This interface acts as a provider for the repositories used within the application, such as
+ * [CategoryRepository] and [FoodRepository].
+ */
 interface AppContainer {
     val categoryRepository: CategoryRepository
     val foodRepository: FoodRepository
 }
 
+/**
+ * Default implementation of [AppContainer], providing the necessary setup for network communication
+ * and database access.
+ *
+ * @property context The application context used for accessing resources and initializing the database.
+ */
 class DefaultAppContainer(private val context: Context) : AppContainer {
     private val networkCheck = NetworkConnectionInterceptor(context)
 
@@ -39,6 +51,9 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
         retrofit.create(FoodApiService::class.java)
     }
 
+    /**
+     * Provides an instance of [CategoryRepository] with caching and network integration.
+     */
     override val categoryRepository: CategoryRepository by lazy {
         CashingCategoryRepository(
             PlatefulDb.getDatabase(context = context).categoryDao(),
@@ -47,6 +62,9 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
         )
     }
 
+    /**
+     * Provides an instance of [FoodRepository] with caching and network integration.
+     */
     override val foodRepository: FoodRepository by lazy {
         CashingFoodRepository(
             PlatefulDb.getDatabase(context = context).foodDao(),

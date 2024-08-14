@@ -10,6 +10,15 @@ import com.example.plateful.ui.screen.favourites.FavouritesScreen
 import com.example.plateful.ui.screen.home.HomeScreen
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
+/**
+ * Defines the main navigation graph for the application, which includes the Home,
+ * Favourites, and CategoryFood screens. This function sets up the navigation
+ * routes and connects them to their respective composables.
+ *
+ * @param navController The [NavHostController] that manages app navigation.
+ * @param platefulViewModel The [PlatefulViewModel] that provides data and
+ * handles logic for the app's screens.
+ */
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     platefulViewModel: PlatefulViewModel

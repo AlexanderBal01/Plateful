@@ -7,6 +7,12 @@ import androidx.compose.runtime.Composable
 import com.example.plateful.model.Food
 import com.example.plateful.ui.uiState.PlatefulListsState
 
+/**
+ * This composable function renders a vertical list of food items.
+ *
+ * @param foodListState - The state object containing the list of food items to be displayed.
+ * @param onFoodClick - A callback function that is triggered when a food item is clicked.
+ */
 @Composable
 fun FoodList(
     foodListState: PlatefulListsState,

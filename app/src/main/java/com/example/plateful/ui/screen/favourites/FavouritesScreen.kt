@@ -18,6 +18,13 @@ import com.example.plateful.model.Food
 import com.example.plateful.ui.components.favourites.FavouritesList
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
+/**
+ * This composable function renders the screen for displaying favourited foods.
+ *
+ * @param modifier (Optional) Modifier to be applied to the screen.
+ * @param onFoodClick The callback function to be triggered when a food item is clicked.
+ * @param platefulViewModel The PlatefulViewModel instance used to access data and state.
+ */
 @Composable
 fun FavouritesScreen(
     modifier: Modifier = Modifier,

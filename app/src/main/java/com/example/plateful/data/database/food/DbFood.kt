@@ -4,6 +4,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.plateful.model.Food
 
+/**
+ * Entity class representing a food item in the local database.
+ *
+ * @property id The unique identifier for the food item, serving as the primary key.
+ * @property name The name of the food item.
+ * @property img The URL of the image associated with the food item.
+ * @property favourite Indicates whether the food item is marked as a favourite.
+ * @property category The category to which the food item belongs.
+ */
 @Entity(tableName = "food")
 data class DbFood(
     @PrimaryKey
@@ -14,6 +23,11 @@ data class DbFood(
     val category: String = ""
 )
 
+/**
+ * Extension function to convert a [DbFood] entity to a [Food] domain model object.
+ *
+ * @return A [Food] object representing the same data as the [DbFood] entity.
+ */
 fun DbFood.asDomainFoodObject(): Food {
     return Food(
         id = this.id,
@@ -24,6 +38,11 @@ fun DbFood.asDomainFoodObject(): Food {
     )
 }
 
+/**
+ * Extension function to convert a [Food] domain model object to a [DbFood] entity.
+ *
+ * @return A [DbFood] object representing the same data as the [Food] domain model.
+ */
 fun Food.asDbFoodObject(): DbFood {
     return DbFood(
         id = this.id,
@@ -34,6 +53,11 @@ fun Food.asDbFoodObject(): DbFood {
     )
 }
 
+/**
+ * Extension function to convert a list of [DbFood] entities to a list of [Food] domain model objects.
+ *
+ * @return A list of [Food] objects representing the same data as the list of [DbFood] entities.
+ */
 fun List<DbFood>.asDomainFoodObjects(): List<Food> {
     return this.map {
         Food(

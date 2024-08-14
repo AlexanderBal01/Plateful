@@ -20,6 +20,13 @@ import com.example.plateful.ui.components.categoryFood.FoodList
 import com.example.plateful.ui.uiState.FoodApiState
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
+/**
+ * This composable function renders the screen for a specific food category.
+ *
+ * @param modifier (Optional) Modifier to be applied to the screen.
+ * @param onFoodClick The callback function to be triggered when a food item is clicked.
+ * @param platefulViewModel The PlatefulViewModel instance used to access data and state.
+ */
 @Composable
 fun CategoryFoodScreen(
     modifier: Modifier = Modifier,

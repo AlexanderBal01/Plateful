@@ -1,7 +1,5 @@
 package com.example.plateful.ui.components.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -10,6 +8,13 @@ import com.example.plateful.navigation.AppScreen
 import com.example.plateful.navigation.navGraphs.mainNavGraph
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
+/**
+ * The main navigation component for the Plateful app.
+ *
+ * @param navController The NavHostController to be used for navigation.
+ * @param modifier Modifier to be applied to the NavHost.
+ * @param platefulViewModel The PlatefulViewModel instance.
+ */
 @Composable
 fun NavComponent(
     navController: NavHostController,
@@ -21,12 +26,6 @@ fun NavComponent(
         navController = navController,
         startDestination = AppScreen.Main.route,
         modifier = modifier,
-        enterTransition = {
-            EnterTransition.None
-        },
-        exitTransition = {
-            ExitTransition.None
-        }
     ) {
         mainNavGraph(navController, platefulViewModel)
     }

@@ -1,3 +1,11 @@
+/**
+ * This file defines the color palette used throughout the Plateful application.
+ * It includes colors for various elements like primary, secondary, background, etc.
+ * Each color is provided in three variants for different contrast levels:
+ * - light: Suitable for light themes
+ * - mediumContrast: Suitable for themes with medium contrast
+ * - highContrast: Suitable for themes with high contrast
+ */
 package com.example.plateful.ui.theme
 import androidx.compose.ui.graphics.Color
 

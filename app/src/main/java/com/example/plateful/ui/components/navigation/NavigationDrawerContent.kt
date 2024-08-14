@@ -18,6 +18,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.example.plateful.navigation.AppScreen
 
+/**
+ * This composable function renders the content for the navigation drawer of the Plateful app.
+ *
+ * @param navController The NavController instance used for navigation.
+ * @param selectedDestination The currently selected navigation destination.
+ * @param modifier (Optional) Modifier to be applied to the NavigationDrawerContent.
+ */
 @Composable
 fun NavigationDrawerContent(
     navController: NavController,

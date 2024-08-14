@@ -14,6 +14,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import com.example.plateful.navigation.AppScreen
 
+/**
+ * This composable function renders a bottom navigation bar for the Plateful app.
+ *
+ * @param selectedDestination (Optional) The currently selected navigation destination.
+ * @param onHomeClick The callback function to be triggered when the Home item is clicked.
+ * @param onFavouritesClick The callback function to be triggered when the Favourites item is clicked.
+ */
 @Composable
 fun PlatefulBottomBar(
     goHome: () -> Unit,

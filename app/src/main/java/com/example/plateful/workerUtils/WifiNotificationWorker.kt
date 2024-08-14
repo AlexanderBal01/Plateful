@@ -15,7 +15,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
+/**
+ * This class defines a coroutine worker for Plateful that runs in the background and displays notifications.
+ * The worker simulates some work being done for 10 seconds and then notifies the user that the work is finished.
+ */
 class WifiNotificationWorker(context: Context, params: WorkerParameters): CoroutineWorker(context, params) {
+
+    /**
+     * This function defines the coroutine that runs the worker's background task.
+     * It first creates a notification with a "starting the worker" message and displays it.
+     * Then it simulates some work by delaying for 10 seconds.
+     * Finally, it creates another notification with a "work finished successfully" message and displays it.
+     * If any error occurs during the process, the worker returns a failure result.
+     *
+     * @return Result - The result of the worker execution. Result.success() if successful, Result.failure() otherwise.
+     */
     override suspend fun doWork(): Result {
         makeStatusNotification("starting the worker", applicationContext)
         return withContext(Dispatchers.IO) {
@@ -29,6 +43,13 @@ class WifiNotificationWorker(context: Context, params: WorkerParameters): Corout
         }
     }
 
+    /**
+     * This function creates a notification with the specified message and displays it to the user.
+     * It creates a notification channel for Plateful if it doesn't already exist.
+     *
+     * @param message - The message to be displayed in the notification.
+     * @param context - The context of the application.
+     */
     private fun makeStatusNotification(message: String, context: Context) {
         val name = "Plateful"
         val description = "Plateful notifications"

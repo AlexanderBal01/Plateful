@@ -36,6 +36,23 @@ import com.example.plateful.ui.components.navigation.PlatefulTopAppBar
 import com.example.plateful.ui.util.NavigationType
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
+/**
+ * The main entry point for the Plateful application's UI.
+ *
+ * This composable function sets up the overall application structure based on the provided
+ * `navigationType` and manages the navigation controller, top app bar, and navigation elements.
+ * It also injects the `PlatefulViewModel` for accessing data and state.
+ *
+ * @param modifier An optional modifier to be applied to the entire composable.
+ * @param navigationType The type of navigation to use:
+ *        - `NavigationType.PERMANENT_NAVIGATION_DRAWER`: Uses a permanent navigation drawer.
+ *        - `NavigationType.BOTTOM_NAVIGATION`: Uses a bottom navigation bar.
+ *        - `NavigationType.NAVIGATION_RAIL`: Uses a navigation rail (conditionally shown).
+ * @param navController An optional `NavHostController` instance for navigation.
+ *        If not provided, a new one will be created.
+ * @param platefulViewModel An optional instance of `PlatefulViewModel` for accessing app data and state.
+ *        If not provided, one will be created using the `PlatefulViewModel.Factory`.
+ */
 @Composable
 fun PlatefulApp(
     modifier: Modifier = Modifier,

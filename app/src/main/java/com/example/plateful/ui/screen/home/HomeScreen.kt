@@ -19,6 +19,13 @@ import com.example.plateful.ui.components.home.CategoryList
 import com.example.plateful.ui.uiState.CategoryApiState
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
+/**
+ * This composable function renders the home screen of the Plateful app.
+ *
+ * @param modifier (Optional) Modifier to be applied to the screen.
+ * @param onCategoryClick The callback function to be triggered when a category item is clicked.
+ * @param platefulViewModel The PlatefulViewModel instance used to access data and state.
+ */
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,

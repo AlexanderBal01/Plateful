@@ -27,6 +27,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 
+/**
+ * PlatefulViewModel manages the UI state and data fetching logic for the Plateful app.
+ * It utilizes repositories for accessing category and food data and exposes state flows
+ * for UI components to observe changes.
+ */
 class PlatefulViewModel(
     private val categoryRepository: CategoryRepository,
     private val foodRepository: FoodRepository
@@ -47,6 +52,9 @@ class PlatefulViewModel(
         Log.i("vm inspection", "PlatefulViewModel init")
     }
 
+    /**
+     * Fetches categories from the repository and updates the UI state and state flows.
+     */
     fun getRepoCategories() {
         try {
             viewModelScope.launch { categoryRepository.refresh() }
@@ -79,6 +87,9 @@ class PlatefulViewModel(
         }
     }
 
+    /**
+     * Fetches food items for the selected category from the repository and updates the UI state and state flows.
+     */
     fun getRepoFoodByCategory() {
         try {
             viewModelScope.launch { foodRepository.refresh(_platefulUiState.value.selectedCategory) }
@@ -111,6 +122,9 @@ class PlatefulViewModel(
         }
     }
 
+    /**
+     * Fetches favourite food items from the repository and updates the UI state and state flows.
+     */
     fun getRepoFoodByFavourite() {
         try {
             platefulUiListsState = foodRepository
@@ -146,6 +160,14 @@ class PlatefulViewModel(
         Log.i("vm inspection", "PlatefulViewModel cleared")
     }
 
+    /**
+     * Updates the selected category in the UI state.
+     *
+     * This function modifies the `selectedCategory` property of the `_platefulUiState`
+     * state flow with the provided `category` value.
+     *
+     * @param category The new selected category.
+     */
     fun setSelectedCategory(category: String) {
         _platefulUiState.update { state ->
             state.copy(
@@ -154,6 +176,15 @@ class PlatefulViewModel(
         }
     }
 
+    /**
+     * Sets the favourite status of a food item.
+     *
+     * This function updates the favourite status of a food item with the given `id` to the specified `favourite` value.
+     * It also handles potential exceptions by setting the `foodApiState` to `FoodApiState.Error` in case of an `IOException`.
+     *
+     * @param favourite The new favourite status for the food item.
+     * @param id The unique identifier of the food item.
+     */
     fun setFavourite(favourite: Boolean, id: String) {
         try {
             viewModelScope.launch {
@@ -165,8 +196,17 @@ class PlatefulViewModel(
     }
 
     companion object {
+        /**
+         * Singleton instance of the PlatefulViewModel.
+         */
         private var Instance: PlatefulViewModel? = null
 
+        /**
+         * Factory for creating PlatefulViewModel instances.
+         *
+         * This factory ensures that only a single instance of the ViewModel is created
+         * and shared across the application.
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 if (Instance == null) {
