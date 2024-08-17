@@ -21,6 +21,7 @@ import com.example.plateful.ui.uiState.PlatefulWorkerState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -37,6 +38,8 @@ class PlatefulViewModel(
     private val foodRepository: FoodRepository
 ): ViewModel() {
     private val _platefulUiState = MutableStateFlow(PlatefulUiState())
+
+    val uiState: StateFlow<PlatefulUiState> = _platefulUiState.asStateFlow()
 
     lateinit var platefulUiListsState: StateFlow<PlatefulListsState>
 
