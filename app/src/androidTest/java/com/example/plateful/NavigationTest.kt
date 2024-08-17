@@ -3,8 +3,8 @@ package com.example.plateful
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
@@ -37,7 +37,7 @@ class NavigationTest {
 
     @Test
     fun navigateToFavourites() {
-        composeTestRule.onNodeWithContentDescription("Favourites").performClick()
+        composeTestRule.onNodeWithText("Favourites").performClick()
 
         composeTestRule.onNodeWithTag("TopBar").assertIsDisplayed()
     }
