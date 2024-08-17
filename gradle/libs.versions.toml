@@ -23,6 +23,7 @@ roomTesting = "2.6.1"
 coilKt = "2.6.0"
 navigationTesting = "2.7.7"
 dokka = "1.9.20"
+coroutinesTesting = "1.9.0-RC"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +54,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-room-test = { group = "androidx.room", name = "room-testing", version.ref = "roomTesting"}
 coil-kt = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilKt"}
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationTesting" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTesting"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
