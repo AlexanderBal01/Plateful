@@ -13,15 +13,15 @@ import com.example.plateful.ui.uiState.PlatefulListsState
  * @param onCategoryClick - A callback function that is triggered when a category item is clicked.
  */
 @Composable
-fun CategoryList(
+fun categoryList(
     categoryListState: PlatefulListsState,
-    onCategoryClick: (String) -> Unit
+    onCategoryClick: (String) -> Unit,
 ) {
     val lazyListState = rememberLazyListState()
 
     LazyColumn(state = lazyListState) {
         items(categoryListState.categoryList) { category ->
-            CategoryItem(name = category.name, img = category.imageUrl, onCategoryClick = onCategoryClick)
+            categoryItem(name = category.name, img = category.imageUrl, onCategoryClick = onCategoryClick)
         }
     }
 }

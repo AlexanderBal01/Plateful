@@ -14,13 +14,13 @@ import kotlinx.coroutines.flow.map
  * @property name The name of the food.
  * @property imgLocation The URL of the food image.
  */
-data class ApiFood (
+data class ApiFood(
     @SerializedName("strMeal")
     val name: String,
     @SerializedName("strMealThumb")
     val imgLocation: String,
     @SerializedName("idMeal")
-    val id: String
+    val id: String,
 )
 
 /**
@@ -32,7 +32,7 @@ data class ApiFood (
  */
 data class ApiFoodList(
     @SerializedName("meals")
-    val meals: List<ApiFood>
+    val meals: List<ApiFood>,
 )
 
 /**
@@ -44,11 +44,10 @@ data class ApiFoodList(
  * @receiver A flow of `ApiFoodList` objects.
  * @return A flow of `List<Food>` objects representing the converted data.
  */
-fun Flow<ApiFoodList>.asDomainObject(): Flow<List<Food>> {
-    return this.map {
+fun Flow<ApiFoodList>.asDomainObject(): Flow<List<Food>> =
+    this.map {
         it.meals.asDomainObjects()
     }
-}
 
 /**
  * Converts a list of `ApiFood` objects to a list of `Food` objects.
@@ -61,13 +60,12 @@ fun Flow<ApiFoodList>.asDomainObject(): Flow<List<Food>> {
  * @receiver A list of `ApiFood` objects.
  * @return A list of `Food` objects representing the converted data.
  */
-fun List<ApiFood>.asDomainObjects(): List<Food> {
-    return this.map {
+fun List<ApiFood>.asDomainObjects(): List<Food> =
+    this.map {
         Food(
             id = it.id,
             name = it.name,
             imageUrl = it.imgLocation,
-            favourite = false
+            favourite = false,
         )
     }
-}

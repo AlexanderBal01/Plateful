@@ -14,5 +14,5 @@ data class Food(
     var name: String = "",
     var imageUrl: String = "",
     var favourite: Boolean = false,
-    var category: String = ""
+    var category: String = "",
 )

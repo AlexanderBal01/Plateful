@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.plateful.R
-import com.example.plateful.ui.components.home.CategoryList
+import com.example.plateful.ui.components.home.categoryList
 import com.example.plateful.ui.uiState.CategoryApiState
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
@@ -27,7 +27,7 @@ import com.example.plateful.ui.viewModel.PlatefulViewModel
  * @param platefulViewModel The PlatefulViewModel instance used to access data and state.
  */
 @Composable
-fun HomeScreen(
+fun homeScreen(
     modifier: Modifier = Modifier,
     onCategoryClick: (String) -> Unit,
     platefulViewModel: PlatefulViewModel,
@@ -37,19 +37,37 @@ fun HomeScreen(
 
     Column {
         Box(modifier = modifier.fillMaxSize()) {
-            when(categoryApiState) {
+            when (categoryApiState) {
                 is CategoryApiState.Loading ->
-                    Column(modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(stringResource(id = R.string.loading), color = MaterialTheme.colorScheme.primary, fontSize = 45.sp, textAlign = TextAlign.Center)
+                    Column(
+                        modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            stringResource(id = R.string.loading),
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 45.sp,
+                            textAlign = TextAlign.Center,
+                        )
                     }
                 is CategoryApiState.Error ->
-                    Column(modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(stringResource(id = R.string.could_not_load), color = MaterialTheme.colorScheme.primary, fontSize = 45.sp, textAlign = TextAlign.Center)
+                    Column(
+                        modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            stringResource(id = R.string.could_not_load),
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 45.sp,
+                            textAlign = TextAlign.Center,
+                        )
                     }
                 is CategoryApiState.Success ->
-                    CategoryList(
+                    categoryList(
                         categoryListState = categoryListState,
-                        onCategoryClick = onCategoryClick
+                        onCategoryClick = onCategoryClick,
                     )
             }
         }

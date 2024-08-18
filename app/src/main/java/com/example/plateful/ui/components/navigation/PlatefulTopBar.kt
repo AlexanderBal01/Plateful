@@ -25,18 +25,19 @@ import com.example.plateful.R
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlatefulTopAppBar(
+fun platefulTopAppBar(
     title: String,
     canNavigateBack: Boolean,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
 ) {
     CenterAlignedTopAppBar(
         title = {
-            Text(title,
+            Text(
+                title,
                 style = MaterialTheme.typography.titleLarge,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colorScheme.onSecondary,
-                modifier = Modifier.testTag("TopBar")
+                modifier = Modifier.testTag("TopBar"),
             )
         },
         navigationIcon = {
@@ -47,11 +48,10 @@ fun PlatefulTopAppBar(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(id = R.string.go_back),
-                        tint = MaterialTheme.colorScheme.onSecondary
+                        tint = MaterialTheme.colorScheme.onSecondary,
                     )
                 }
             }
-
         },
         colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
     )

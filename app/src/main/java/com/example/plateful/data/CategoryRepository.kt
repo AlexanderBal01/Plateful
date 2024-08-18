@@ -73,9 +73,9 @@ interface CategoryRepository {
 class CashingCategoryRepository(
     private val categoryDao: CategoryDao,
     private val categoryApiService: CategoryApiService,
-    context: Context
-): CategoryRepository {
-    private var workId = UUID(1,2)
+    context: Context,
+) : CategoryRepository {
+    private var workId = UUID(1, 2)
     private val workManager = WorkManager.getInstance(context)
 
     /**
@@ -89,22 +89,20 @@ class CashingCategoryRepository(
      * @param category The name of the category to retrieve.
      * @return A [Flow] emitting the [Category] if found, or null if not found.
      */
-    override fun getCategory(category: String): Flow<Category?> {
-        return categoryDao.getItem(category).map {
+    override fun getCategory(category: String): Flow<Category?> =
+        categoryDao.getItem(category).map {
             it.asDomainCategoryObject()
         }
-    }
 
     /**
      * Retrieves all categories from the local database.
      *
      * @return A [Flow] emitting a list of all [Category] objects.
      */
-    override fun getAll(): Flow<List<Category>> {
-        return categoryDao.getAllItems().map {
+    override fun getAll(): Flow<List<Category>> =
+        categoryDao.getAllItems().map {
             it.asDomainCategoryObjects()
         }
-    }
 
     /**
      * Inserts a new category into the local database.
@@ -122,10 +120,11 @@ class CashingCategoryRepository(
      * In case of a network timeout, logs the error stack trace.
      */
     override suspend fun refresh() {
-        val constraints = Constraints
-            .Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
+        val constraints =
+            Constraints
+                .Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
 
         val requestBuilder = OneTimeWorkRequestBuilder<WifiNotificationWorker>()
         val request = requestBuilder.setConstraints(constraints).build()

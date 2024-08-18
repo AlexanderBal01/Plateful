@@ -25,15 +25,17 @@ import com.example.plateful.navigation.AppScreen
  * @param navController The NavController instance used for navigation.
  */
 @Composable
-fun PlatefulNavigationRail(
+fun platefulNavigationRail(
     modifier: Modifier = Modifier,
     selectedDestination: NavDestination?,
     navController: NavController,
 ) {
-
-    NavigationRail (modifier = modifier
-        .fillMaxHeight()
-        .background(MaterialTheme.colorScheme.primaryContainer)) {
+    NavigationRail(
+        modifier =
+            modifier
+                .fillMaxHeight()
+                .background(MaterialTheme.colorScheme.primaryContainer),
+    ) {
         NavigationRailItem(
             selected = selectedDestination?.route == AppScreen.Main.Home.route,
             onClick = {
@@ -43,15 +45,15 @@ fun PlatefulNavigationRail(
                 Icon(
                     imageVector = Icons.Default.Home,
                     contentDescription = stringResource(id = AppScreen.Main.Home.title!!),
-                    tint = MaterialTheme.colorScheme.onSecondary
+                    tint = MaterialTheme.colorScheme.onSecondary,
                 )
             },
             label = {
                 Text(
                     text = stringResource(id = AppScreen.Main.Home.title!!),
-                    color = MaterialTheme.colorScheme.onSecondary
+                    color = MaterialTheme.colorScheme.onSecondary,
                 )
-            }
+            },
         )
         NavigationRailItem(
             selected = selectedDestination?.route == AppScreen.Main.Favourites.route,
@@ -62,15 +64,15 @@ fun PlatefulNavigationRail(
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = stringResource(id = AppScreen.Main.Favourites.title!!),
-                    tint = MaterialTheme.colorScheme.onSecondary
+                    tint = MaterialTheme.colorScheme.onSecondary,
                 )
             },
             label = {
                 Text(
                     text = stringResource(id = AppScreen.Main.Favourites.title!!),
-                    color = MaterialTheme.colorScheme.onSecondary
+                    color = MaterialTheme.colorScheme.onSecondary,
                 )
-            }
+            },
         )
     }
 }

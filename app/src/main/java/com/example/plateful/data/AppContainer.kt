@@ -27,21 +27,27 @@ interface AppContainer {
  *
  * @property context The application context used for accessing resources and initializing the database.
  */
-class DefaultAppContainer(private val context: Context) : AppContainer {
+class DefaultAppContainer(
+    private val context: Context,
+) : AppContainer {
     private val networkCheck = NetworkConnectionInterceptor(context)
 
-    private val client = OkHttpClient.Builder()
-        .addInterceptor(networkCheck)
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-        .build()
+    private val client =
+        OkHttpClient
+            .Builder()
+            .addInterceptor(networkCheck)
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .build()
 
     private val baseUrl = "https://www.themealdb.com/"
 
-    private val retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(baseUrl)
-        .client(client)
-        .build()
+    private val retrofit =
+        Retrofit
+            .Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(baseUrl)
+            .client(client)
+            .build()
 
     private val retrofitCategoryService: CategoryApiService by lazy {
         retrofit.create(CategoryApiService::class.java)
@@ -58,7 +64,7 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
         CashingCategoryRepository(
             PlatefulDb.getDatabase(context = context).categoryDao(),
             retrofitCategoryService,
-            context
+            context,
         )
     }
 
@@ -69,8 +75,7 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
         CashingFoodRepository(
             PlatefulDb.getDatabase(context = context).foodDao(),
             retrofitFoodService,
-            context
+            context,
         )
     }
-
 }

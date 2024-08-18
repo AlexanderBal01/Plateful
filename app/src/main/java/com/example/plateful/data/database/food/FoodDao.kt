@@ -28,7 +28,10 @@ interface FoodDao {
      * @param favourite The new favourite status to be set for the food item.
      */
     @Query("UPDATE food SET favourite = :favourite WHERE id = :foodId")
-    suspend fun setFavourite(foodId: String, favourite: Boolean)
+    suspend fun setFavourite(
+        foodId: String,
+        favourite: Boolean,
+    )
 
     /**
      * Retrieves all food items marked as favourites from the database.

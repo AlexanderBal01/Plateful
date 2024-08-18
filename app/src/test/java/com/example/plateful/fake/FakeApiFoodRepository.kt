@@ -22,7 +22,10 @@ class FakeApiFoodRepository : FoodRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun setFavourite(food: String, favourite: Boolean) {
+    override suspend fun setFavourite(
+        food: String,
+        favourite: Boolean,
+    ) {
         TODO("Not yet implemented")
     }
 

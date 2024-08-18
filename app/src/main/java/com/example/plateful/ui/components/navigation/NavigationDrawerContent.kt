@@ -23,22 +23,21 @@ import com.example.plateful.navigation.AppScreen
  *
  * @param navController The NavController instance used for navigation.
  * @param selectedDestination The currently selected navigation destination.
- * @param modifier (Optional) Modifier to be applied to the NavigationDrawerContent.
+ * @param modifier (Optional) Modifier to be applied to the navigationDrawerContent.
  */
 @Composable
-fun NavigationDrawerContent(
+fun navigationDrawerContent(
     navController: NavController,
     selectedDestination: NavDestination?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-
     Column(modifier = modifier.fillMaxHeight()) {
         NavigationDrawerItem(
             selected = selectedDestination?.route == AppScreen.Main.Home.route,
             label = {
                 Text(
                     text = stringResource(id = AppScreen.Main.Home.title!!),
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
                 )
             },
             icon = {
@@ -47,20 +46,21 @@ fun NavigationDrawerContent(
                     contentDescription = AppScreen.Main.Home.route,
                 )
             },
-            colors = NavigationDrawerItemDefaults.colors(
-                unselectedContainerColor = Color.Transparent,
-                selectedContainerColor = MaterialTheme.colorScheme.primary,
-            ),
+            colors =
+                NavigationDrawerItemDefaults.colors(
+                    unselectedContainerColor = Color.Transparent,
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                ),
             onClick = {
                 navController.navigate(AppScreen.Main.Home.route)
-            }
+            },
         )
         NavigationDrawerItem(
             selected = selectedDestination?.route == AppScreen.Main.Favourites.route,
             label = {
                 Text(
                     text = stringResource(id = AppScreen.Main.Favourites.title!!),
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
                 )
             },
             icon = {
@@ -69,13 +69,14 @@ fun NavigationDrawerContent(
                     contentDescription = AppScreen.Main.Favourites.route,
                 )
             },
-            colors = NavigationDrawerItemDefaults.colors(
-                unselectedContainerColor = Color.Transparent,
-                selectedContainerColor = MaterialTheme.colorScheme.primary,
-            ),
+            colors =
+                NavigationDrawerItemDefaults.colors(
+                    unselectedContainerColor = Color.Transparent,
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                ),
             onClick = {
                 navController.navigate(AppScreen.Main.Favourites.route)
-            }
+            },
         )
     }
 }

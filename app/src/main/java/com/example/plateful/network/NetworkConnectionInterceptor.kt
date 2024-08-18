@@ -15,7 +15,9 @@ import okio.IOException
  *
  * @property context The [Context] used to retrieve the system's [ConnectivityManager].
  */
-class NetworkConnectionInterceptor (private val context: Context) : Interceptor {
+class NetworkConnectionInterceptor(
+    private val context: Context,
+) : Interceptor {
     /**
      * Intercepts the HTTP request and checks for network connectivity. If no network
      * connection is detected, it logs a message and throws an [IOException]. Otherwise,
@@ -25,15 +27,16 @@ class NetworkConnectionInterceptor (private val context: Context) : Interceptor 
      * @return The [Response] after proceeding with the request if there is network connectivity.
      * @throws IOException If there is no network connectivity.
      */
-    override fun intercept(chain: Interceptor.Chain): Response = chain.run {
-        if (!isConnected(context)) {
-            Log.i("retrofit", "there is no connection")
-            throw IOException()
-        } else {
-            val builder = chain.request().newBuilder()
-            return@run chain.proceed(builder.build())
+    override fun intercept(chain: Interceptor.Chain): Response =
+        chain.run {
+            if (!isConnected(context)) {
+                Log.i("retrofit", "there is no connection")
+                throw IOException()
+            } else {
+                val builder = chain.request().newBuilder()
+                return@run chain.proceed(builder.build())
+            }
         }
-    }
 
     /**
      * Checks if the device is connected to a network.
@@ -48,12 +51,13 @@ class NetworkConnectionInterceptor (private val context: Context) : Interceptor 
         val networkCapabilities = connectivityManager.activeNetwork ?: return false
         val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
 
-        result = when {
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
+        result =
+            when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
 
         return result
     }

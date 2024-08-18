@@ -11,7 +11,7 @@ import com.example.plateful.data.DefaultAppContainer
  * for initializing application-wide components, such as dependency injection, database setup,
  * or network configuration.
  */
-class PlatefulApplication: Application() {
+class PlatefulApplication : Application() {
     lateinit var container: AppContainer
 
     /**

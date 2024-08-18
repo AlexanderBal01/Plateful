@@ -5,11 +5,6 @@ import com.example.plateful.model.Category
 import com.example.plateful.model.Food
 
 /**
- * This file defines data classes and interfaces representing the various UI states
- * used within the Plateful application.
- */
-
-/**
  * Data class representing the overall UI state of the Plateful app.
  *
  * @property scrollActionIdx: Index of the last scroll action performed (optional)
@@ -44,23 +39,27 @@ data class PlatefulListsState(
  * @property workerInfo: Information about the worker's execution status (optional)
  */
 data class PlatefulWorkerState(
-    val workerInfo: WorkInfo? = null
+    val workerInfo: WorkInfo? = null,
 )
 
 /**
  * Sealed interface representing the possible API states for category data retrieval.
  */
 sealed interface CategoryApiState {
-    data object Success: CategoryApiState
-    data object Error: CategoryApiState
-    data object Loading: CategoryApiState
+    data object Success : CategoryApiState
+
+    data object Error : CategoryApiState
+
+    data object Loading : CategoryApiState
 }
 
 /**
  * Sealed interface representing the possible API states for food data retrieval.
  */
 sealed interface FoodApiState {
-    data object Success: FoodApiState
-    data object Error: FoodApiState
-    data object Loading: FoodApiState
+    data object Success : FoodApiState
+
+    data object Error : FoodApiState
+
+    data object Loading : FoodApiState
 }

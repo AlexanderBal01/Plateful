@@ -39,43 +39,46 @@ import com.example.plateful.model.Food
  * @param onFoodClick - A callback function that is triggered when the food item is clicked.
  */
 @Composable
-fun FoodItem(
+fun foodItem(
     modifier: Modifier = Modifier,
     food: Food,
-    onFoodClick: (Food) -> Unit
+    onFoodClick: (Food) -> Unit,
 ) {
     Card(
-        modifier = modifier
-            .padding(dimensionResource(R.dimen.card_outer_padding))
-            .fillMaxWidth()
-            .animateContentSize(
-                animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioNoBouncy,
-                    stiffness = Spring.StiffnessMedium
-                )
-            )
-            .clickable {
-                onFoodClick(food)
-            }, // Use clickable for better semantics
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
+        modifier =
+            modifier
+                .padding(dimensionResource(R.dimen.card_outer_padding))
+                .fillMaxWidth()
+                .animateContentSize(
+                    animationSpec =
+                        spring(
+                            dampingRatio = Spring.DampingRatioNoBouncy,
+                            stiffness = Spring.StiffnessMedium,
+                        ),
+                ).clickable {
+                    onFoodClick(food)
+                },
+        // Use clickable for better semantics
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+            ),
     ) {
-
-        Row (
+        Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .padding(dimensionResource(R.dimen.card_padding))
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .padding(dimensionResource(R.dimen.card_padding))
+                    .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             AsyncImage(
                 model = food.imageUrl,
                 contentDescription = stringResource(id = R.string.img_category),
-                modifier = modifier.width(60.dp)
+                modifier = modifier.width(60.dp),
             )
-            
-            Column (modifier = modifier.width(dimensionResource(id = R.dimen.text_column_width))) {
+
+            Column(modifier = modifier.width(dimensionResource(id = R.dimen.text_column_width))) {
                 Text(
                     text = food.name,
                     color = MaterialTheme.colorScheme.onSecondary,
@@ -83,15 +86,14 @@ fun FoodItem(
                     style = MaterialTheme.typography.bodyLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-
                 )
             }
 
             Icon(
-                imageVector = if(food.favourite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                imageVector = if (food.favourite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                 contentDescription = stringResource(R.string.navigate_to_category_item),
                 tint = MaterialTheme.colorScheme.onSecondary,
-                modifier = Modifier.size(39.dp) // Used dp instead of dimensionResource for clarity
+                modifier = Modifier.size(39.dp), // Used dp instead of dimensionResource for clarity
             )
         }
     }

@@ -8,7 +8,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import com.example.plateful.ui.PlatefulApp
+import com.example.plateful.ui.platefulApp
 import com.example.plateful.ui.util.NavigationType
 import org.junit.Before
 import org.junit.Rule
@@ -24,7 +24,7 @@ class NavigationTest {
         composeTestRule.setContent {
             navController = TestNavHostController(LocalContext.current)
             navController.navigatorProvider.addNavigator(ComposeNavigator())
-            PlatefulApp(navigationType = NavigationType.BOTTOM_NAVIGATION, navController = navController)
+            platefulApp(navigationType = NavigationType.BOTTOM_NAVIGATION, navController = navController)
         }
     }
 

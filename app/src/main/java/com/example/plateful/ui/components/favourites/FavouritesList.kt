@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.plateful.model.Food
-import com.example.plateful.ui.components.categoryFood.FoodItem
+import com.example.plateful.ui.components.categoryFood.foodItem
 
 /**
  * This composable function renders a vertical list of favourite food items.
@@ -16,7 +16,7 @@ import com.example.plateful.ui.components.categoryFood.FoodItem
  * @param onFoodClick - A callback function that is triggered when a favourite food item is clicked.
  */
 @Composable
-fun FavouritesList(
+fun favouritesList(
     modifier: Modifier = Modifier,
     favouriteList: List<Food>,
     onFoodClick: (Food) -> Unit,
@@ -25,7 +25,7 @@ fun FavouritesList(
 
     LazyColumn(state = lazyListState) {
         items(favouriteList) { food ->
-            FoodItem(food = food, onFoodClick = onFoodClick)
+            foodItem(food = food, onFoodClick = onFoodClick)
         }
     }
 }

@@ -24,7 +24,7 @@ interface FoodApiService {
      */
     @GET("api/json/v1/1/filter.php")
     suspend fun getFoodByCategory(
-        @Query("c") category: String
+        @Query("c") category: String,
     ): ApiFoodList
 }
 
@@ -39,10 +39,11 @@ interface FoodApiService {
  * @param category The name of the category to filter by.
  * @return A flow of `ApiFoodList` representing the response from the API for the specified category.
  */
-fun FoodApiService.getFoodsByCategoryAsFlow(category: String): Flow<ApiFoodList> = flow {
-    try {
-        emit(getFoodByCategory(category))
-    } catch (e: Exception) {
-        Log.e("API", "getFoodsByCategoryAsFlow: ${e.stackTraceToString()}")
+fun FoodApiService.getFoodsByCategoryAsFlow(category: String): Flow<ApiFoodList> =
+    flow {
+        try {
+            emit(getFoodByCategory(category))
+        } catch (e: Exception) {
+            Log.e("API", "getFoodsByCategoryAsFlow: ${e.stackTraceToString()}")
+        }
     }
-}

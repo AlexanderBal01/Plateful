@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.plateful.R
 import com.example.plateful.model.Food
-import com.example.plateful.ui.components.categoryFood.FoodList
+import com.example.plateful.ui.components.categoryFood.foodList
 import com.example.plateful.ui.uiState.FoodApiState
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
@@ -28,10 +28,10 @@ import com.example.plateful.ui.viewModel.PlatefulViewModel
  * @param platefulViewModel The PlatefulViewModel instance used to access data and state.
  */
 @Composable
-fun CategoryFoodScreen(
+fun categoryFoodScreen(
     modifier: Modifier = Modifier,
     onFoodClick: (Food) -> Unit,
-    platefulViewModel: PlatefulViewModel
+    platefulViewModel: PlatefulViewModel,
 ) {
     val categoryFoodListState by platefulViewModel.platefulUiListsState.collectAsState()
     val foodApiState = platefulViewModel.foodApiState
@@ -43,13 +43,13 @@ fun CategoryFoodScreen(
                     Column(
                         modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
                             stringResource(id = R.string.loading),
                             color = MaterialTheme.colorScheme.primary,
                             fontSize = 45.sp,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
                     }
 
@@ -57,20 +57,20 @@ fun CategoryFoodScreen(
                     Column(
                         modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
                             stringResource(id = R.string.could_not_load),
                             color = MaterialTheme.colorScheme.primary,
                             fontSize = 45.sp,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
                     }
 
                 is FoodApiState.Success ->
-                    FoodList(
+                    foodList(
                         foodListState = categoryFoodListState,
-                        onFoodClick = onFoodClick
+                        onFoodClick = onFoodClick,
                     )
             }
         }

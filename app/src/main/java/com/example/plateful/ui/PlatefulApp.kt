@@ -28,11 +28,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.plateful.R
 import com.example.plateful.navigation.AppScreen
-import com.example.plateful.ui.components.navigation.NavComponent
-import com.example.plateful.ui.components.navigation.NavigationDrawerContent
-import com.example.plateful.ui.components.navigation.PlatefulBottomBar
-import com.example.plateful.ui.components.navigation.PlatefulNavigationRail
-import com.example.plateful.ui.components.navigation.PlatefulTopAppBar
+import com.example.plateful.ui.components.navigation.navComponent
+import com.example.plateful.ui.components.navigation.navigationDrawerContent
+import com.example.plateful.ui.components.navigation.platefulBottomBar
+import com.example.plateful.ui.components.navigation.platefulNavigationRail
+import com.example.plateful.ui.components.navigation.platefulTopAppBar
 import com.example.plateful.ui.util.NavigationType
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
@@ -54,11 +54,11 @@ import com.example.plateful.ui.viewModel.PlatefulViewModel
  *        If not provided, one will be created using the `PlatefulViewModel.Factory`.
  */
 @Composable
-fun PlatefulApp(
+fun platefulApp(
     modifier: Modifier = Modifier,
     navigationType: NavigationType,
     navController: NavHostController = rememberNavController(),
-    platefulViewModel: PlatefulViewModel = viewModel(factory = PlatefulViewModel.Factory)
+    platefulViewModel: PlatefulViewModel = viewModel(factory = PlatefulViewModel.Factory),
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val topAppbarTitle = remember { mutableStateOf("") }
@@ -66,7 +66,7 @@ fun PlatefulApp(
     val goHome: () -> Unit = {
         navController.popBackStack(
             AppScreen.Main.Home.route,
-            inclusive = false
+            inclusive = false,
         )
     }
 
@@ -88,7 +88,6 @@ fun PlatefulApp(
             showBottomBarState.value = true
             showTopBarState.value = true
             topAppbarTitle.value = stringResource(AppScreen.Main.Home.title!!)
-
         }
 
         AppScreen.Main.Favourites.route -> {
@@ -113,44 +112,47 @@ fun PlatefulApp(
             PermanentNavigationDrawer(
                 modifier = modifier,
                 drawerContent = {
-                    PermanentDrawerSheet (
-                        modifier = modifier
-                            .width(dimensionResource(R.dimen.drawer_width))
-                            .fillMaxHeight()
-                            .background(MaterialTheme.colorScheme.primaryContainer),
-                        windowInsets = WindowInsets.ime
+                    PermanentDrawerSheet(
+                        modifier =
+                            modifier
+                                .width(dimensionResource(R.dimen.drawer_width))
+                                .fillMaxHeight()
+                                .background(MaterialTheme.colorScheme.primaryContainer),
+                        windowInsets = WindowInsets.ime,
                     ) {
-                        NavigationDrawerContent(
+                        navigationDrawerContent(
                             selectedDestination = navController.currentDestination,
                             navController = navController,
-                            modifier = modifier
-                                .wrapContentWidth()
-                                .fillMaxHeight()
-                                .background(MaterialTheme.colorScheme.primaryContainer)
-                                .padding(
-                                    dimensionResource(R.dimen.drawer_padding_content_horizontal),
-                                    dimensionResource(R.dimen.drawer_padding_header)
-                                )
+                            modifier =
+                                modifier
+                                    .wrapContentWidth()
+                                    .fillMaxHeight()
+                                    .background(MaterialTheme.colorScheme.primaryContainer)
+                                    .padding(
+                                        dimensionResource(R.dimen.drawer_padding_content_horizontal),
+                                        dimensionResource(R.dimen.drawer_padding_header),
+                                    ),
                         )
                     }
-                }
+                },
             ) {
                 Scaffold(
                     containerColor = Color.Transparent,
-                    modifier = modifier
-                        .fillMaxSize(),
+                    modifier =
+                        modifier
+                            .fillMaxSize(),
                     topBar = {
-                        PlatefulTopAppBar(
+                        platefulTopAppBar(
                             title = topAppbarTitle.value,
                             canNavigateBack = canNavigateBack,
-                            navigateUp = navigateUp
+                            navigateUp = navigateUp,
                         )
-                    }
+                    },
                 ) { innerPadding ->
-                    NavComponent(
+                    navComponent(
                         navController = navController,
                         modifier = modifier.padding(innerPadding),
-                        platefulViewModel = platefulViewModel
+                        platefulViewModel = platefulViewModel,
                     )
                 }
             }
@@ -160,53 +162,52 @@ fun PlatefulApp(
             Scaffold(
                 containerColor = Color.Transparent,
                 topBar = {
-                    PlatefulTopAppBar(
+                    platefulTopAppBar(
                         title = topAppbarTitle.value,
                         canNavigateBack = canNavigateBack,
-                        navigateUp = navigateUp
+                        navigateUp = navigateUp,
                     )
                 },
                 bottomBar = {
-                    PlatefulBottomBar(
+                    platefulBottomBar(
                         goHome = goHome,
                         goToFavourites = goToFavourites,
-                        selectedDestination = navController.currentDestination
+                        selectedDestination = navController.currentDestination,
                     )
-                }
+                },
             ) { innerPadding ->
-                NavComponent(
+                navComponent(
                     navController = navController,
                     modifier = modifier.padding(innerPadding),
-                    platefulViewModel = platefulViewModel
+                    platefulViewModel = platefulViewModel,
                 )
             }
         }
 
         else -> {
-                AnimatedVisibility(visible = navigationType == NavigationType.NAVIGATION_RAIL) {
-                    PlatefulNavigationRail(
-                        selectedDestination = navController.currentDestination,
-                        navController = navController
+            AnimatedVisibility(visible = navigationType == NavigationType.NAVIGATION_RAIL) {
+                platefulNavigationRail(
+                    selectedDestination = navController.currentDestination,
+                    navController = navController,
+                )
+            }
+            Scaffold(
+                containerColor = Color.Transparent,
+                topBar = {
+                    platefulTopAppBar(
+                        title = topAppbarTitle.value,
+                        canNavigateBack = canNavigateBack,
+                        navigateUp = navigateUp,
                     )
-                }
-                Scaffold (
-                    containerColor = Color.Transparent,
-                    topBar = {
-                        PlatefulTopAppBar(
-                            title = topAppbarTitle.value,
-                            canNavigateBack = canNavigateBack,
-                            navigateUp = navigateUp
-                        )
-                    },
-                ) { innerPadding ->
-                    // Navigation component for handling different screens.
-                    NavComponent(
-                        navController = navController,
-                        modifier = modifier.padding(innerPadding),
-                        platefulViewModel = platefulViewModel
-                    )
-                }
-
+                },
+            ) { innerPadding ->
+                // Navigation component for handling different screens.
+                navComponent(
+                    navController = navController,
+                    modifier = modifier.padding(innerPadding),
+                    platefulViewModel = platefulViewModel,
+                )
+            }
         }
     }
 }

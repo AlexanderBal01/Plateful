@@ -14,15 +14,15 @@ import com.example.plateful.ui.uiState.PlatefulListsState
  * @param onFoodClick - A callback function that is triggered when a food item is clicked.
  */
 @Composable
-fun FoodList(
+fun foodList(
     foodListState: PlatefulListsState,
-    onFoodClick: (Food) -> Unit
+    onFoodClick: (Food) -> Unit,
 ) {
     val lazyListState = rememberLazyListState()
 
     LazyColumn(state = lazyListState) {
         items(foodListState.foodList) { food ->
-            FoodItem(food = food, onFoodClick = onFoodClick)
+            foodItem(food = food, onFoodClick = onFoodClick)
         }
     }
 }

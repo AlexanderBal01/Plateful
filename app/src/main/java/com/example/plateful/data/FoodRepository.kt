@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.map
 import java.net.SocketTimeoutException
 import java.util.UUID
 
-
 /**
  * Interface defining the contract for managing food data.
  *
@@ -66,7 +65,10 @@ interface FoodRepository {
      * @param food The ID of the food item.
      * @param favourite The new favorite status.
      */
-    suspend fun setFavourite(food: String, favourite: Boolean)
+    suspend fun setFavourite(
+        food: String,
+        favourite: Boolean,
+    )
 
     /**
      * Refreshes the food data for a specific category by fetching it from the network
@@ -93,9 +95,9 @@ interface FoodRepository {
 class CashingFoodRepository(
     private val foodDao: FoodDao,
     private val foodApiService: FoodApiService,
-    context: Context
-): FoodRepository {
-    private var workId = UUID(1,2)
+    context: Context,
+) : FoodRepository {
+    private var workId = UUID(1, 2)
     private val workManager = WorkManager.getInstance(context)
 
     /**
@@ -109,22 +111,20 @@ class CashingFoodRepository(
      * @param food The ID of the food item to retrieve.
      * @return A [Flow] emitting the [Food] if found, or null if not found.
      */
-    override fun getFood(food: String): Flow<Food?> {
-        return foodDao.getItem(foodId = food).map {
+    override fun getFood(food: String): Flow<Food?> =
+        foodDao.getItem(foodId = food).map {
             it.asDomainFoodObject()
         }
-    }
 
     /**
      * Retrieves all favorite food items from the local database.
      *
      * @return A [Flow] emitting a list of favorite [Food] items.
      */
-    override fun getFavourites(): Flow<List<Food>> {
-        return foodDao.getFavourites().map {
+    override fun getFavourites(): Flow<List<Food>> =
+        foodDao.getFavourites().map {
             it.asDomainFoodObjects()
         }
-    }
 
     /**
      * Retrieves all food items belonging to a specific category from the local database.
@@ -132,11 +132,10 @@ class CashingFoodRepository(
      * @param category The category name to filter food items by.
      * @return A [Flow] emitting a list of [Food] items for the specified category.
      */
-    override fun getByCategory(category: String): Flow<List<Food>> {
-        return foodDao.getFoodCategory(category).map {
+    override fun getByCategory(category: String): Flow<List<Food>> =
+        foodDao.getFoodCategory(category).map {
             it.asDomainFoodObjects()
         }
-    }
 
     /**
      * Inserts a new food item into the local database.
@@ -153,7 +152,10 @@ class CashingFoodRepository(
      * @param food The ID of the food item.
      * @param favourite The new favorite status.
      */
-    override suspend fun setFavourite(food: String, favourite: Boolean) {
+    override suspend fun setFavourite(
+        food: String,
+        favourite: Boolean,
+    ) {
         foodDao.setFavourite(food, favourite)
     }
 
@@ -167,10 +169,11 @@ class CashingFoodRepository(
      * @param category The category name to refresh food items for.
      */
     override suspend fun refresh(category: String) {
-        val constraints = Constraints
-            .Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
+        val constraints =
+            Constraints
+                .Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
 
         val requestBuilder = OneTimeWorkRequestBuilder<WifiNotificationWorker>()
         val request = requestBuilder.setConstraints(constraints).build()

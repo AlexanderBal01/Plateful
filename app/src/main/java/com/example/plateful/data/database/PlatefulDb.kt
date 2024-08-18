@@ -20,8 +20,7 @@ import com.example.plateful.data.database.food.FoodDao
  * @property foodDao Provides access to CRUD operations for the `DbFood` table.
  */
 @Database(entities = [DbCategory::class, DbFood::class], version = 5, exportSchema = false)
-abstract class PlatefulDb: RoomDatabase() {
-
+abstract class PlatefulDb : RoomDatabase() {
     /**
      * Provides access to the [CategoryDao] for performing operations on the `DbCategory` table.
      *
@@ -38,7 +37,7 @@ abstract class PlatefulDb: RoomDatabase() {
 
     companion object {
         @Volatile
-        private var Instance: PlatefulDb? = null
+        private var instance: PlatefulDb? = null
 
         /**
          * Returns a singleton instance of [PlatefulDb].
@@ -50,13 +49,13 @@ abstract class PlatefulDb: RoomDatabase() {
          * @param context The application context used to build the database.
          * @return The singleton instance of [PlatefulDb].
          */
-        fun getDatabase(context: Context): PlatefulDb {
-            return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context, PlatefulDb::class.java, "plateful_database")
+        fun getDatabase(context: Context): PlatefulDb =
+            instance ?: synchronized(this) {
+                Room
+                    .databaseBuilder(context, PlatefulDb::class.java, "plateful_database")
                     .fallbackToDestructiveMigration()
                     .build()
-                    .also { Instance = it }
+                    .also { instance = it }
             }
-        }
     }
 }

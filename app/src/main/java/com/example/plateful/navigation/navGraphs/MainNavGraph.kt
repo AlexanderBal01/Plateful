@@ -5,9 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.plateful.navigation.AppScreen
-import com.example.plateful.ui.screen.categoryFood.CategoryFoodScreen
-import com.example.plateful.ui.screen.favourites.FavouritesScreen
-import com.example.plateful.ui.screen.home.HomeScreen
+import com.example.plateful.ui.screen.categoryFood.categoryFoodScreen
+import com.example.plateful.ui.screen.favourites.favouritesScreen
+import com.example.plateful.ui.screen.home.homeScreen
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 
 /**
@@ -21,48 +21,48 @@ import com.example.plateful.ui.viewModel.PlatefulViewModel
  */
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
-    platefulViewModel: PlatefulViewModel
+    platefulViewModel: PlatefulViewModel,
 ) {
     navigation(
         route = AppScreen.Main.route,
-        startDestination = AppScreen.Main.Home.route
+        startDestination = AppScreen.Main.Home.route,
     ) {
         composable(
-            route = AppScreen.Main.Home.route
+            route = AppScreen.Main.Home.route,
         ) {
             platefulViewModel.getRepoCategories()
-            HomeScreen(
+            homeScreen(
                 onCategoryClick = {
                     platefulViewModel.setSelectedCategory(it)
                     val route = AppScreen.Main.CategoryFood.createRoute(category = it)
                     navController.navigate(route)
                 },
-                platefulViewModel = platefulViewModel
+                platefulViewModel = platefulViewModel,
             )
         }
 
         composable(
-            route = AppScreen.Main.Favourites.route
+            route = AppScreen.Main.Favourites.route,
         ) {
             platefulViewModel.getRepoFoodByFavourite()
-            FavouritesScreen(
+            favouritesScreen(
                 onFoodClick = {
                     platefulViewModel.setFavourite(!it.favourite, it.id)
                     platefulViewModel.getRepoFoodByFavourite()
                 },
-                platefulViewModel = platefulViewModel
+                platefulViewModel = platefulViewModel,
             )
         }
 
         composable(
-            route = AppScreen.Main.CategoryFood.route
+            route = AppScreen.Main.CategoryFood.route,
         ) {
             platefulViewModel.getRepoFoodByCategory()
-            CategoryFoodScreen(
+            categoryFoodScreen(
                 onFoodClick = {
                     platefulViewModel.setFavourite(!it.favourite, it.id)
                 },
-                platefulViewModel = platefulViewModel
+                platefulViewModel = platefulViewModel,
             )
         }
     }

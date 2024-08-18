@@ -22,24 +22,24 @@ import com.example.plateful.navigation.AppScreen
  * @param onFavouritesClick The callback function to be triggered when the Favourites item is clicked.
  */
 @Composable
-fun PlatefulBottomBar(
+fun platefulBottomBar(
     goHome: () -> Unit,
     goToFavourites: () -> Unit,
-    selectedDestination: NavDestination?
+    selectedDestination: NavDestination?,
 ) {
-    NavigationBar (containerColor = MaterialTheme.colorScheme.primaryContainer) {
+    NavigationBar(containerColor = MaterialTheme.colorScheme.primaryContainer) {
         NavigationBarItem(
-            colors = NavigationBarItemDefaults.colors(
-                MaterialTheme.colorScheme.onSecondary,
-                MaterialTheme.colorScheme.primary,
-                MaterialTheme.colorScheme.primary,
-                MaterialTheme.colorScheme.onSecondary,
-                MaterialTheme.colorScheme.onSecondary,
-                MaterialTheme.colorScheme.onSecondary,
-                MaterialTheme.colorScheme.onSecondary
-            ),
+            colors =
+                NavigationBarItemDefaults.colors(
+                    MaterialTheme.colorScheme.onSecondary,
+                    MaterialTheme.colorScheme.primary,
+                    MaterialTheme.colorScheme.primary,
+                    MaterialTheme.colorScheme.onSecondary,
+                    MaterialTheme.colorScheme.onSecondary,
+                    MaterialTheme.colorScheme.onSecondary,
+                    MaterialTheme.colorScheme.onSecondary,
+                ),
             selected = selectedDestination?.route == AppScreen.Main.Home.route,
-
             label = {
                 Text(
                     text = stringResource(id = AppScreen.Main.Home.title!!),
@@ -49,38 +49,36 @@ fun PlatefulBottomBar(
             icon = {
                 Icon(
                     imageVector = Icons.Default.Home,
-                    contentDescription = stringResource(id = AppScreen.Main.Home.title!!)
+                    contentDescription = stringResource(id = AppScreen.Main.Home.title!!),
                 )
             },
-
-            onClick = goHome
+            onClick = goHome,
         )
         NavigationBarItem(
-            colors = NavigationBarItemDefaults.colors(
-                MaterialTheme.colorScheme.onSecondary,
-                MaterialTheme.colorScheme.primary,
-                MaterialTheme.colorScheme.primary,
-                MaterialTheme.colorScheme.onSecondary,
-                MaterialTheme.colorScheme.onSecondary,
-                MaterialTheme.colorScheme.onSecondary,
-                MaterialTheme.colorScheme.onSecondary
-            ),
+            colors =
+                NavigationBarItemDefaults.colors(
+                    MaterialTheme.colorScheme.onSecondary,
+                    MaterialTheme.colorScheme.primary,
+                    MaterialTheme.colorScheme.primary,
+                    MaterialTheme.colorScheme.onSecondary,
+                    MaterialTheme.colorScheme.onSecondary,
+                    MaterialTheme.colorScheme.onSecondary,
+                    MaterialTheme.colorScheme.onSecondary,
+                ),
             selected = selectedDestination?.route == AppScreen.Main.Favourites.route,
-
             label = {
                 Text(
                     text = stringResource(id = AppScreen.Main.Favourites.title!!),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Star,
-                    contentDescription = stringResource(id = AppScreen.Main.Favourites.title!!)
+                    contentDescription = stringResource(id = AppScreen.Main.Favourites.title!!),
                 )
             },
-
-            onClick = goToFavourites
+            onClick = goToFavourites,
         )
     }
 }

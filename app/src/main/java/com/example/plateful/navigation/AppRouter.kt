@@ -33,7 +33,7 @@ private object ArgParams {
      * @param param The parameter key to be formatted.
      * @return The formatted parameter path as a string.
      */
-    fun toPath(param: String) = "{${param}}"
+    fun toPath(param: String) = "{$param}"
 }
 
 /**
@@ -77,7 +77,7 @@ sealed class AppScreen {
          */
         data object CategoryFood : TopLevelDestination(
             route = Routes.CATEGORY_FOOD,
-            title = R.string.category_detail
+            title = R.string.category_detail,
         ) {
             /**
              * Creates a fully qualified route for the category food screen by replacing the

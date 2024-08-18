@@ -33,10 +33,11 @@ interface CategoryApiService {
  * @receiver An instance of `CategoryApiService`.
  * @return A flow of `ApiCategoryList` representing the response from the API.
  */
-fun CategoryApiService.getCategoriesAsFlow(): Flow<ApiCategoryList> = flow {
-    try {
-        emit(getCategories())
-    } catch (e: Exception) {
-        Log.e("API", "getCategoriesAsFlow: ${e.stackTraceToString()}")
+fun CategoryApiService.getCategoriesAsFlow(): Flow<ApiCategoryList> =
+    flow {
+        try {
+            emit(getCategories())
+        } catch (e: Exception) {
+            Log.e("API", "getCategoriesAsFlow: ${e.stackTraceToString()}")
+        }
     }
-}

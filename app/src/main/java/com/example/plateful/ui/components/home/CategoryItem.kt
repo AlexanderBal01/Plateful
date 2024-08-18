@@ -35,38 +35,41 @@ import com.example.plateful.R
  * @param onCategoryClick - A callback function that is triggered when the category item is clicked.
  */
 @Composable
-fun CategoryItem(
+fun categoryItem(
     modifier: Modifier = Modifier,
     name: String,
     img: String,
-    onCategoryClick: (String) -> Unit
+    onCategoryClick: (String) -> Unit,
 ) {
     Card(
-        modifier = modifier
-            .padding(dimensionResource(R.dimen.card_outer_padding))
-            .fillMaxWidth()
-            .animateContentSize(
-                animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioNoBouncy,
-                    stiffness = Spring.StiffnessMedium
-                )
-            )
-            .clickable { onCategoryClick(name) }, // Use clickable for better semantics
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
+        modifier =
+            modifier
+                .padding(dimensionResource(R.dimen.card_outer_padding))
+                .fillMaxWidth()
+                .animateContentSize(
+                    animationSpec =
+                        spring(
+                            dampingRatio = Spring.DampingRatioNoBouncy,
+                            stiffness = Spring.StiffnessMedium,
+                        ),
+                ).clickable { onCategoryClick(name) },
+        // Use clickable for better semantics
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+            ),
     ) {
-
-        Row (
+        Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .padding(dimensionResource(R.dimen.card_padding))
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .padding(dimensionResource(R.dimen.card_padding))
+                    .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             AsyncImage(
                 model = img,
-                contentDescription = stringResource(id = R.string.img_category)
+                contentDescription = stringResource(id = R.string.img_category),
             )
 
             // Text content
@@ -74,7 +77,7 @@ fun CategoryItem(
                 text = name,
                 color = MaterialTheme.colorScheme.onSecondary,
                 fontSize = 35.sp,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
 
             // Right arrow icon
@@ -82,7 +85,7 @@ fun CategoryItem(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = stringResource(R.string.navigate_to_category_item),
                 tint = MaterialTheme.colorScheme.onSecondary,
-                modifier = Modifier.size(39.dp) // Used dp instead of dimensionResource for clarity
+                modifier = Modifier.size(39.dp), // Used dp instead of dimensionResource for clarity
             )
         }
     }

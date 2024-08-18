@@ -35,11 +35,11 @@ import java.io.IOException
  */
 class PlatefulViewModel(
     private val categoryRepository: CategoryRepository,
-    private val foodRepository: FoodRepository
-): ViewModel() {
-    private val _platefulUiState = MutableStateFlow(PlatefulUiState())
+    private val foodRepository: FoodRepository,
+) : ViewModel() {
+    private val platefulUiState = MutableStateFlow(PlatefulUiState())
 
-    val uiState: StateFlow<PlatefulUiState> = _platefulUiState.asStateFlow()
+    val uiState: StateFlow<PlatefulUiState> = platefulUiState.asStateFlow()
 
     lateinit var platefulUiListsState: StateFlow<PlatefulListsState>
 
@@ -62,29 +62,29 @@ class PlatefulViewModel(
         try {
             viewModelScope.launch { categoryRepository.refresh() }
 
-            platefulUiListsState = categoryRepository
-                .getAll()
-                .map {
-                    platefulUiListsState.value.copy(categoryList = it)
-                }
-                .stateIn(
-                    scope = viewModelScope,
-                    started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = PlatefulListsState()
-                )
+            platefulUiListsState =
+                categoryRepository
+                    .getAll()
+                    .map {
+                        platefulUiListsState.value.copy(categoryList = it)
+                    }.stateIn(
+                        scope = viewModelScope,
+                        started = SharingStarted.WhileSubscribed(5_000L),
+                        initialValue = PlatefulListsState(),
+                    )
 
             categoryApiState = CategoryApiState.Success
 
-            platefulWorkerState = categoryRepository
-                .wifiWorkInfo
-                .map {
-                    PlatefulWorkerState(it)
-                }
-                .stateIn(
-                    scope = viewModelScope,
-                    started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = PlatefulWorkerState()
-                )
+            platefulWorkerState =
+                categoryRepository
+                    .wifiWorkInfo
+                    .map {
+                        PlatefulWorkerState(it)
+                    }.stateIn(
+                        scope = viewModelScope,
+                        started = SharingStarted.WhileSubscribed(5_000L),
+                        initialValue = PlatefulWorkerState(),
+                    )
         } catch (e: IOException) {
             categoryApiState = CategoryApiState.Error
         }
@@ -95,31 +95,31 @@ class PlatefulViewModel(
      */
     fun getRepoFoodByCategory() {
         try {
-            viewModelScope.launch { foodRepository.refresh(_platefulUiState.value.selectedCategory) }
+            viewModelScope.launch { foodRepository.refresh(platefulUiState.value.selectedCategory) }
 
-            platefulUiListsState = foodRepository
-                .getByCategory(_platefulUiState.value.selectedCategory)
-                .map {
-                    platefulUiListsState.value.copy(foodList = it)
-                }
-                .stateIn(
-                    scope = viewModelScope,
-                    started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = PlatefulListsState()
-                )
+            platefulUiListsState =
+                foodRepository
+                    .getByCategory(platefulUiState.value.selectedCategory)
+                    .map {
+                        platefulUiListsState.value.copy(foodList = it)
+                    }.stateIn(
+                        scope = viewModelScope,
+                        started = SharingStarted.WhileSubscribed(5_000L),
+                        initialValue = PlatefulListsState(),
+                    )
 
             foodApiState = FoodApiState.Success
 
-             platefulWorkerState = foodRepository
-                .wifiWorkInfo
-                .map {
-                    PlatefulWorkerState(it)
-                }
-                .stateIn(
-                    scope = viewModelScope,
-                    started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = PlatefulWorkerState()
-                )
+            platefulWorkerState =
+                foodRepository
+                    .wifiWorkInfo
+                    .map {
+                        PlatefulWorkerState(it)
+                    }.stateIn(
+                        scope = viewModelScope,
+                        started = SharingStarted.WhileSubscribed(5_000L),
+                        initialValue = PlatefulWorkerState(),
+                    )
         } catch (e: IOException) {
             foodApiState = FoodApiState.Error
         }
@@ -130,29 +130,29 @@ class PlatefulViewModel(
      */
     fun getRepoFoodByFavourite() {
         try {
-            platefulUiListsState = foodRepository
-                .getFavourites()
-                .map {
-                    platefulUiListsState.value.copy(favouritesList = it)
-                }
-                .stateIn(
-                    scope = viewModelScope,
-                    started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = PlatefulListsState()
-                )
+            platefulUiListsState =
+                foodRepository
+                    .getFavourites()
+                    .map {
+                        platefulUiListsState.value.copy(favouritesList = it)
+                    }.stateIn(
+                        scope = viewModelScope,
+                        started = SharingStarted.WhileSubscribed(5_000L),
+                        initialValue = PlatefulListsState(),
+                    )
 
             foodApiState = FoodApiState.Success
 
-            platefulWorkerState = foodRepository
-                .wifiWorkInfo
-                .map {
-                    PlatefulWorkerState(it)
-                }
-                .stateIn(
-                    scope = viewModelScope,
-                    started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = PlatefulWorkerState()
-                )
+            platefulWorkerState =
+                foodRepository
+                    .wifiWorkInfo
+                    .map {
+                        PlatefulWorkerState(it)
+                    }.stateIn(
+                        scope = viewModelScope,
+                        started = SharingStarted.WhileSubscribed(5_000L),
+                        initialValue = PlatefulWorkerState(),
+                    )
         } catch (e: IOException) {
             foodApiState = FoodApiState.Error
         }
@@ -172,9 +172,9 @@ class PlatefulViewModel(
      * @param category The new selected category.
      */
     fun setSelectedCategory(category: String) {
-        _platefulUiState.update { state ->
+        platefulUiState.update { state ->
             state.copy(
-                selectedCategory = category
+                selectedCategory = category,
             )
         }
     }
@@ -188,7 +188,10 @@ class PlatefulViewModel(
      * @param favourite The new favourite status for the food item.
      * @param id The unique identifier of the food item.
      */
-    fun setFavourite(favourite: Boolean, id: String) {
+    fun setFavourite(
+        favourite: Boolean,
+        id: String,
+    ) {
         try {
             viewModelScope.launch {
                 foodRepository.setFavourite(id, favourite)
@@ -202,7 +205,7 @@ class PlatefulViewModel(
         /**
          * Singleton instance of the PlatefulViewModel.
          */
-        private var Instance: PlatefulViewModel? = null
+        private var instance: PlatefulViewModel? = null
 
         /**
          * Factory for creating PlatefulViewModel instances.
@@ -210,16 +213,17 @@ class PlatefulViewModel(
          * This factory ensures that only a single instance of the ViewModel is created
          * and shared across the application.
          */
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                if (Instance == null) {
-                    val application = (this[APPLICATION_KEY] as PlatefulApplication)
-                    val categoryRepository = application.container.categoryRepository
-                    val foodRepository = application.container.foodRepository
-                    Instance = PlatefulViewModel(categoryRepository = categoryRepository, foodRepository = foodRepository)
+        val Factory: ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    if (instance == null) {
+                        val application = (this[APPLICATION_KEY] as PlatefulApplication)
+                        val categoryRepository = application.container.categoryRepository
+                        val foodRepository = application.container.foodRepository
+                        instance = PlatefulViewModel(categoryRepository = categoryRepository, foodRepository = foodRepository)
+                    }
+                    instance!!
                 }
-                Instance!!
             }
-        }
     }
 }

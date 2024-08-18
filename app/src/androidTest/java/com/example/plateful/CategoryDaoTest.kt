@@ -23,8 +23,20 @@ class CategoryDaoTest {
     private lateinit var categoryDao: CategoryDao
     private lateinit var platefulDb: PlatefulDb
 
-    private var category1 = Category("1", "Beef", "https://www.themealdb.com/images/category/beef.png", "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times. Beef is a source of high-quality protein and essential nutrients.")
-    private var category2 = Category("2", "Chicken", "https://www.themealdb.com/images/category/chicken.png", "Chicken is a type of domesticated fowl, a subspecies of the red junglefowl. It is one of the most common and widespread domestic animals, with a total population of more than 19 billion as of 2011.[1] Humans commonly keep chickens as a source of food (consuming both their meat and eggs) and, more rarely, as pets.")
+    private var category1 =
+        Category(
+            "1",
+            "Beef",
+            "https://www.themealdb.com/images/category/beef.png",
+            "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times. Beef is a source of high-quality protein and essential nutrients.",
+        )
+    private var category2 =
+        Category(
+            "2",
+            "Chicken",
+            "https://www.themealdb.com/images/category/chicken.png",
+            "Chicken is a type of domesticated fowl, a subspecies of the red junglefowl. It is one of the most common and widespread domestic animals, with a total population of more than 19 billion as of 2011.[1] Humans commonly keep chickens as a source of food (consuming both their meat and eggs) and, more rarely, as pets.",
+        )
 
     private suspend fun addOneCategoryToDb() {
         categoryDao.insert(category1.asDbCategoryObject())
@@ -52,28 +64,31 @@ class CategoryDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoInsert_InsertOneCategoryIntoDb() = runBlocking {
-        addOneCategoryToDb()
-        val allItems = categoryDao.getAllItems().first()
-        Assert.assertEquals(allItems[0].asDomainCategoryObject(), category1)
-    }
+    fun daoInsert_InsertOneCategoryIntoDb() =
+        runBlocking {
+            addOneCategoryToDb()
+            val allItems = categoryDao.getAllItems().first()
+            Assert.assertEquals(allItems[0].asDomainCategoryObject(), category1)
+        }
 
     @Test
     @Throws(Exception::class)
-    fun daoGetAllCategories_returnsAllCategoriesFromDB() = runBlocking {
-        addTwoCategoriesToDb()
-        val allItems = categoryDao.getAllItems().first()
-        Assert.assertEquals(allItems[0].asDomainCategoryObject(), category1)
-        Assert.assertEquals(allItems[1].asDomainCategoryObject(), category2)
-    }
+    fun daoGetAllCategories_returnsAllCategoriesFromDB() =
+        runBlocking {
+            addTwoCategoriesToDb()
+            val allItems = categoryDao.getAllItems().first()
+            Assert.assertEquals(allItems[0].asDomainCategoryObject(), category1)
+            Assert.assertEquals(allItems[1].asDomainCategoryObject(), category2)
+        }
 
     @Test
     @Throws(Exception::class)
-    fun daoGetCategory_returnsOneCategoryFromDB() = runBlocking {
-        addTwoCategoriesToDb()
-        val item1 = categoryDao.getItem("Beef").first()
-        val item2 = categoryDao.getItem("Chicken").first()
-        Assert.assertEquals(item1.asDomainCategoryObject(), category1)
-        Assert.assertEquals(item2.asDomainCategoryObject(), category2)
-    }
+    fun daoGetCategory_returnsOneCategoryFromDB() =
+        runBlocking {
+            addTwoCategoriesToDb()
+            val item1 = categoryDao.getItem("Beef").first()
+            val item2 = categoryDao.getItem("Chicken").first()
+            Assert.assertEquals(item1.asDomainCategoryObject(), category1)
+            Assert.assertEquals(item2.asDomainCategoryObject(), category2)
+        }
 }

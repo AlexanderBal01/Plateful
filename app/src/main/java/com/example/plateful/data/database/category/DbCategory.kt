@@ -18,7 +18,7 @@ data class DbCategory(
     val id: String = "",
     val name: String = "",
     val description: String = "",
-    val img: String = ""
+    val img: String = "",
 )
 
 /**
@@ -26,41 +26,38 @@ data class DbCategory(
  *
  * @return A [Category] object representing the same data as the [DbCategory].
  */
-fun DbCategory.asDomainCategoryObject(): Category {
-    return Category(
+fun DbCategory.asDomainCategoryObject(): Category =
+    Category(
         id = this.id,
         name = this.name,
         imageUrl = this.img,
-        description = this.description
+        description = this.description,
     )
-}
 
 /**
  * Extension function to convert a [Category] domain model object to a [DbCategory] entity.
  *
  * @return A [DbCategory] object representing the same data as the [Category].
  */
-fun Category.asDbCategoryObject(): DbCategory {
-    return DbCategory(
+fun Category.asDbCategoryObject(): DbCategory =
+    DbCategory(
         id = this.id,
         name = this.name,
         img = this.imageUrl,
-        description = this.description
+        description = this.description,
     )
-}
 
 /**
  * Extension function to convert a list of [DbCategory] entities to a list of [Category] domain model objects.
  *
  * @return A list of [Category] objects representing the same data as the list of [DbCategory] entities.
  */
-fun List<DbCategory>.asDomainCategoryObjects(): List<Category> {
-    return this.map {
+fun List<DbCategory>.asDomainCategoryObjects(): List<Category> =
+    this.map {
         Category(
             id = it.id,
             name = it.name,
             imageUrl = it.img,
-            description = it.description
+            description = it.description,
         )
     }
-}

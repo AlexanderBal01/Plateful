@@ -16,12 +16,11 @@ import com.example.plateful.ui.viewModel.PlatefulViewModel
  * @param platefulViewModel The PlatefulViewModel instance.
  */
 @Composable
-fun NavComponent(
+fun navComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    platefulViewModel: PlatefulViewModel
+    platefulViewModel: PlatefulViewModel,
 ) {
-
     NavHost(
         navController = navController,
         startDestination = AppScreen.Main.route,

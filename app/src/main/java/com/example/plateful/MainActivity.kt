@@ -13,8 +13,8 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
-import com.example.plateful.ui.PlatefulApp
-import com.example.plateful.ui.theme.PlatefulTheme
+import com.example.plateful.ui.platefulApp
+import com.example.plateful.ui.theme.platefulTheme
 import com.example.plateful.ui.util.NavigationType
 
 /**
@@ -24,7 +24,6 @@ import com.example.plateful.ui.util.NavigationType
  * It typically hosts a single fragment or a Jetpack Compose navigation component.
  */
 class MainActivity : ComponentActivity() {
-
     /**
      * Called when the activity is starting.
      *
@@ -41,24 +40,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PlatefulTheme {
+            platefulTheme {
                 Scaffold(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.onSecondary)) { innerPadding ->
                     val windowSize = calculateWindowSizeClass(activity = this)
 
                     when (windowSize.widthSizeClass) {
                         WindowWidthSizeClass.Compact -> {
-                            PlatefulApp(modifier = Modifier.padding(innerPadding), navigationType = NavigationType.BOTTOM_NAVIGATION)
+                            platefulApp(modifier = Modifier.padding(innerPadding), navigationType = NavigationType.BOTTOM_NAVIGATION)
                         }
                         WindowWidthSizeClass.Medium -> {
-                            PlatefulApp(modifier = Modifier.padding(innerPadding), navigationType = NavigationType.NAVIGATION_RAIL)
+                            platefulApp(modifier = Modifier.padding(innerPadding), navigationType = NavigationType.NAVIGATION_RAIL)
                         }
                         WindowWidthSizeClass.Expanded -> {
-                            PlatefulApp(modifier = Modifier, navigationType = NavigationType.PERMANENT_NAVIGATION_DRAWER)
+                            platefulApp(modifier = Modifier, navigationType = NavigationType.PERMANENT_NAVIGATION_DRAWER)
                         }
                         else -> {
-                            PlatefulApp(modifier = Modifier.padding(innerPadding), navigationType = NavigationType.BOTTOM_NAVIGATION)
+                            platefulApp(modifier = Modifier.padding(innerPadding), navigationType = NavigationType.BOTTOM_NAVIGATION)
                         }
-                        }
+                    }
                 }
             }
         }

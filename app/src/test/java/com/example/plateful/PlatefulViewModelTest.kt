@@ -23,25 +23,28 @@ class PlatefulViewModelTest {
 
     @Test
     fun settingNameChangesState() {
-        val viewModel = PlatefulViewModel(
-            foodRepository = FakeApiFoodRepository(),
-            categoryRepository = FakeApiCategoryRepositroy()
-        )
+        val viewModel =
+            PlatefulViewModel(
+                foodRepository = FakeApiFoodRepository(),
+                categoryRepository = FakeApiCategoryRepositroy(),
+            )
         viewModel.setSelectedCategory(someCategoryName)
         Assert.assertEquals(viewModel.uiState.value.selectedCategory, someCategoryName)
     }
 }
 
-class TestDispatcherRule @OptIn(ExperimentalCoroutinesApi::class) constructor(
-    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
-) : TestWatcher() {
+class TestDispatcherRule
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun starting(description: Description?) {
-        Dispatchers.setMain(testDispatcher)
-    }
+    constructor(
+        private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
+    ) : TestWatcher() {
+        @OptIn(ExperimentalCoroutinesApi::class)
+        override fun starting(description: Description?) {
+            Dispatchers.setMain(testDispatcher)
+        }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override fun finished(description: Description?) {
-        Dispatchers.resetMain()
+        @OptIn(ExperimentalCoroutinesApi::class)
+        override fun finished(description: Description?) {
+            Dispatchers.resetMain()
+        }
     }
-}

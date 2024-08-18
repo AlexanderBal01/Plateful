@@ -22,7 +22,7 @@ data class ApiCategory(
     @SerializedName("strCategoryThumb")
     val imageLocation: String,
     @SerializedName("strCategoryDescription")
-    val description: String
+    val description: String,
 )
 
 /**
@@ -34,7 +34,7 @@ data class ApiCategory(
  */
 data class ApiCategoryList(
     @SerializedName("categories")
-    val category: List<ApiCategory>
+    val category: List<ApiCategory>,
 )
 
 /**
@@ -46,12 +46,10 @@ data class ApiCategoryList(
  * @receiver A flow of `ApiCategoryList` objects.
  * @return A flow of `List<Category>` objects representing the converted data.
  */
-fun Flow<ApiCategoryList>.asDomainObject(): Flow<List<Category>> {
-    return this.map {
+fun Flow<ApiCategoryList>.asDomainObject(): Flow<List<Category>> =
+    this.map {
         it.category.asDomainObjects()
     }
-
-}
 
 /**
  * Converts a list of `ApiCategory` objects to a list of `Category` objects.
@@ -62,13 +60,12 @@ fun Flow<ApiCategoryList>.asDomainObject(): Flow<List<Category>> {
  * @receiver A list of `ApiCategory` objects.
  * @return A list of `Category` objects representing the converted data.
  */
-fun List<ApiCategory>.asDomainObjects(): List<Category> {
-    return this.map {
+fun List<ApiCategory>.asDomainObjects(): List<Category> =
+    this.map {
         Category(
             id = it.id,
             name = it.name,
             imageUrl = it.imageLocation,
-            description = it.description
+            description = it.description,
         )
     }
-}
