@@ -4,6 +4,7 @@ import com.example.plateful.fake.FakeApiCategoryRepositroy
 import com.example.plateful.fake.FakeApiFoodRepository
 import com.example.plateful.ui.viewModel.PlatefulViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -31,13 +32,15 @@ class PlatefulViewModelTest {
     }
 }
 
-class TestDispatcherRule(
-    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
+class TestDispatcherRule @OptIn(ExperimentalCoroutinesApi::class) constructor(
+    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
 ) : TestWatcher() {
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun starting(description: Description?) {
         Dispatchers.setMain(testDispatcher)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun finished(description: Description?) {
         Dispatchers.resetMain()
     }
